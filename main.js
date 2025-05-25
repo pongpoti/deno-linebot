@@ -1,12 +1,16 @@
 import * as line from '@line/bot-sdk';
 import express from 'express';
+import "jsr:@std/dotenv/load";
+
+//channelSecret: "c02f0c8c17e4b0f607b31e3ad1c3f529"
+//channelAccessToken: "qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU=
 
 const config = {
-  channelSecret: "c02f0c8c17e4b0f607b31e3ad1c3f529"
+  channelSecret: Deno.env.get("CHANNEL_SECRET")
 };
 
 const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: "qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU="
+  channelAccessToken: Deno.env.get("CHANNEL_ACCESS_TOKEN")
 });
 
 const app = express();

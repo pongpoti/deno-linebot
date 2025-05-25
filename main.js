@@ -1,27 +1,17 @@
 import * as line from '@line/bot-sdk';
 import express from 'express';
-import "jsr:@std/dotenv/load";
 
-import { config } from 'https://deno.land/x/dotenv/mod.ts';
-await config({export: true});
-console.log(Deno.env.get("CHANNEL_ACCESS_TOKEN"));
-
-
-
-//Deno.env.set("CHANNEL_SECRET", "c02f0c8c17e4b0f607b31e3ad1c3f529");
-//Deno.env.set("CHANNEL_ACCESS_TOKEN", "qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU=");
-
-const clientConfig = {
-  channelSecret: Deno.env.get("CHANNEL_SECRET")
+const config = {
+  channelSecret: "c02f0c8c17e4b0f607b31e3ad1c3f529"
 };
 
 const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: Deno.env.get("CHANNEL_ACCESS_TOKEN")
+  channelAccessToken: "qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU="
 });
 
 const app = express();
 
-app.post('/callback', line.middleware(clientConfig), (req, res) => {
+app.post('/callback', line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))

@@ -1,17 +1,30 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@std/dotenv@*": "0.225.4",
     "npm:@line/bot-sdk@^9.9.0": "9.9.0",
+    "npm:@types/node@*": "22.15.15",
     "npm:express@^5.1.0": "5.1.0"
+  },
+  "jsr": {
+    "@std/dotenv@0.225.4": {
+      "integrity": "2a672c2b192abe535dcfea1ae89f219ee3979af6aad7d185cb19206ee9bc5caf"
+    }
   },
   "npm": {
     "@line/bot-sdk@9.9.0": {
       "integrity": "sha512-/jVjH7k2uMWY1O0F/zkwYD3dqDH/pWbawvDtR6DV/scruH86w9zZrMwknZLt1unUWdK+V9eX4UVP/gLAzqUocg==",
       "dependencies": [
-        "@types/node"
+        "@types/node@22.15.21"
       ],
       "optionalDependencies": [
         "axios"
+      ]
+    },
+    "@types/node@22.15.15": {
+      "integrity": "sha512-R5muMcZob3/Jjchn5LcO8jdKwSCbzqmPB6ruBxMcf9kbxtniZHP327s6C37iOfuw8mbKK3cAQa7sEl7afLrQ8A==",
+      "dependencies": [
+        "undici-types"
       ]
     },
     "@types/node@22.15.21": {

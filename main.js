@@ -4,13 +4,11 @@ import "jsr:@std/dotenv/load";
 
 //Deno.env.set("CHANNEL_SECRET", "c02f0c8c17e4b0f607b31e3ad1c3f529");
 //Deno.env.set("CHANNEL_ACCESS_TOKEN", "qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU=");
-
+console.log(Deno.env.get("CHANNEL_SECRET"));
 console.log(Deno.env.CHANNEL_SECRET);
-console.log(Deno.env.CHANNEL_ACCESS_TOKEN);
-
 
 const config = {
-  channelSecret: Deno.env.CHANNEL_SECRET
+  channelSecret: Deno.env.get("CHANNEL_SECRET")
 };
 
 const client = new line.messagingApi.MessagingApiClient({

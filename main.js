@@ -38,7 +38,7 @@ app.post("/tally", (req, res) => {
       "messages": [
         {
           "type": "text",
-          "text": webhookPayload
+          "text": webhookPayload.toString()
         }
       ]
     }),

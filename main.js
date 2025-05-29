@@ -2,6 +2,12 @@ import * as line from '@line/bot-sdk';
 import express from 'express';
 import process from "node:process";
 
+const headers = 
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU="
+};
+
 const config = {
   channelSecret: Deno.env.get("CHANNEL_SECRET")
 };
@@ -24,7 +30,15 @@ app.post('/line', line.middleware(config), (req, res) => {
 
 app.post('/tally', (req, res) => {
   const webhookPayload = req.body;
-  res.json(webhookPayload);
+  fetch( "https://api.line.me/v2/bot/message/push", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+        "to": "U60a46a396e1df9b83a7167c51180e252",
+        "messages": [webhookPayload]
+    })
+  })
+  //res.json(webhookPayload);
 });
 
 function handleEvent(event) {

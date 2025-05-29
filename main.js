@@ -35,7 +35,12 @@ app.post("/tally", (req, res) => {
     headers: headers,
     body: JSON.stringify({
       "to": "U60a46a396e1df9b83a7167c51180e252",
-      "messages": [webhookPayload],
+      "messages": [
+        {
+          "type": "text",
+          "text": webhookPayload.toString()
+        }
+      ]
     }),
   });
   //res.json(webhookPayload);

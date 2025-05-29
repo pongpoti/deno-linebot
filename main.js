@@ -29,7 +29,7 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 app.post("/tally", (req, res) => {
-  //const webhookPayload = req.body;
+  const webhookPayload = req.body;
   fetch("https://api.line.me/v2/bot/message/push", {
     method: "POST",
     headers: headers,
@@ -38,7 +38,7 @@ app.post("/tally", (req, res) => {
       "messages": [
         {
           "type": "text",
-          "text": "Tally hook (POST)"
+          "text": webhookPayload
         }
       ]
     }),

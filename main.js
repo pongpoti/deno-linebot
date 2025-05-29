@@ -1,5 +1,6 @@
 import * as line from '@line/bot-sdk';
 import express from 'express';
+import process from "node:process";
 
 const config = {
   channelSecret: Deno.env.get("CHANNEL_SECRET")
@@ -11,7 +12,7 @@ const client = new line.messagingApi.MessagingApiClient({
 
 const app = express();
 
-app.post('/callback', line.middleware(config), (req, res) => {
+app.post('/line', line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
@@ -19,6 +20,11 @@ app.post('/callback', line.middleware(config), (req, res) => {
       console.error(err);
       res.status(500).end();
     });
+});
+
+app.post('/tally', (req, res) => {
+  const webhookPayload = req.body;
+  res.json(webhookPayload);
 });
 
 function handleEvent(event) {

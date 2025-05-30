@@ -18,32 +18,12 @@ const client = new line.messagingApi.MessagingApiClient({
 
 const app = express();
 
-app.post("/line", line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).end();
-    });
+app.get("/access", (reg, res) => {
+  res.send(req.body);
 });
 
 app.post("/tally", (req, res) => {
-  const webhookPayload = req.body;
-  fetch("https://api.line.me/v2/bot/message/push", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      "to": "U60a46a396e1df9b83a7167c51180e252",
-      "messages": [
-        {
-          "type": "text",
-          "text": webhookPayload.toString()
-        }
-      ]
-    }),
-  });
-  //res.json(webhookPayload);
+
 });
 
 app.get("/tally", (reg, res) => {
@@ -60,6 +40,16 @@ app.get("/tally", (reg, res) => {
       ],
     }),
   });  
+});
+
+app.post("/line", line.middleware(config), (req, res) => {
+  Promise
+    .all(req.body.events.map(handleEvent))
+    .then((result) => res.json(result))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
 });
 
 function handleEvent(event) {

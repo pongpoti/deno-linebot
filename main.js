@@ -19,7 +19,7 @@ const client = new line.messagingApi.MessagingApiClient({
 const app = express();
 
 app.get("/access", (reg, res) => {
-  res.send(req.body);
+  res.send(req.query);
 });
 
 app.post("/tally", (req, res) => {

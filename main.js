@@ -18,7 +18,7 @@ const client = new line.messagingApi.MessagingApiClient({
 
 const app = express();
 
-app.get("/access", (reg, res) => {
+app.get("/access", (req, res) => {
   res.send(req.query);
 });
 

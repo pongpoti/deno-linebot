@@ -19,7 +19,21 @@ const client = new line.messagingApi.MessagingApiClient({
 const app = express();
 
 app.get("/access", (req, res) => {
-  res.send(req.query);
+  const code = req.query.code;
+  const response = fetch("https://api.line.me/oauth2/v2.1/token", {
+    method : "POST", 
+    headers : headers, 
+    body : JSON.stringify({
+      grant_type : "authorization_code",
+      client_id : "2007211330",
+      client_secret : "ea3204e6ff3f9a8365c2a20de8a92568",
+      redirect_uri : "https://pongsit-linebot.deno.dev/access",
+      code : code
+    })
+  })
+  .then( (res) => { return res; })
+
+  res.send(response);
 });
 
 app.post("/tally", (req, res) => {

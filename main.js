@@ -42,7 +42,7 @@ app.get("/auth", (req, res) => {
     data: qs.stringify({
       grant_type: "authorization_code",
       code: code,
-      redirect_uri: "http://localhost:3000",
+      redirect_uri: "https://pongsit-linebot.deno.dev/callback",
       client_id: "2007211330",
       client_secret: "ea3204e6ff3f9a8365c2a20de8a92568",
     }),

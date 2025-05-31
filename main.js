@@ -28,7 +28,7 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  const state = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
+  const state = randomStr(20, "12345abcde")
   res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=" + state);
 })
 
@@ -98,4 +98,13 @@ function handleEvent(event) {
     replyToken: event.replyToken,
     messages: [echo],
   });
+}
+
+function randomStr(len, arr) {
+    let ans = '';
+    for (let i = len; i > 0; i--) {
+        ans +=
+            arr[(Math.floor(Math.random() * arr.length))];
+    }
+    console.log(ans);
 }

@@ -27,6 +27,10 @@ app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
+app.get("/", (req, res) => {
+  res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde");
+})
+
 app.get("/callback", (req, res) => {
   res.redirect("https://pongsit-linebot.deno.dev/auth?code=" + req.query.code)
 })

@@ -12,7 +12,6 @@ const headers = {
     "Bearer qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU=",
 };
 
-
 const config = {
   channelSecret: Deno.env.get("CHANNEL_SECRET"),
 };
@@ -26,25 +25,31 @@ const app = express();
 app.use("/regis", express.static("regis"));
 
 app.get("/", (_, res) => {
-  res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde");
-})
+  res.redirect(
+    "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde",
+  );
+});
 
 app.get("/callback", (req, res) => {
-  res.redirect("https://pongsit-linebot.deno.dev/auth?code=" + req.query.code)
-})
+  res.redirect("https://pongsit-linebot.deno.dev/auth?code=" + req.query.code);
+});
 
 app.get("/test", (req, res) => {
   axios({
-    method: "GET",
-    url: "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    method: "get",
+    url:
+      "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
     headers: {
-      "Content-Type" : "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   })
-    .then( (response) => {
-      res.send(response);
+    .then((result) => {
+      res.send(result.data);
     })
-})
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 app.get("/auth", (req, res) => {
   const code = req.query.code;

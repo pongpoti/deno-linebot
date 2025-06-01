@@ -19,6 +19,7 @@
             if (liff.isLoggedIn()) {
                 idToken = await liff.getIDToken();
                 h.innerText  = idToken;
+                window.location.replace("https://tally.so/r/w4yvGY?token=" + idToken);
             } else {
                 liff.login();
             }

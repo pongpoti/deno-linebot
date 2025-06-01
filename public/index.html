@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>welcome to index.html</h1>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+        let idToken = "";
+        const main = async () => {
+            await liff.init({ liffId: "2007211330-ELD8XqmV" });
+            if (liff.isLoggedIn()) {
+                idToken = await liff.getIDToken();
+                window.location.replace("https://tally.so/r/w4yvGY?token=" + idToken);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -4,6 +4,7 @@ import process from "node:process";
 import qs from "qs";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import path from "path";
 
 const headers = {
   "Content-Type": "application/json",
@@ -21,11 +22,8 @@ const client = new line.messagingApi.MessagingApiClient({
 });
 
 const app = express();
-app.set("view engine", "ejs");
 
-app.get("/ejs", (req, res) => {
-  res.render("index");
-})
+app.use("/static", express.static("public"));
 
 app.get("/", (_, res) => {
   res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde");

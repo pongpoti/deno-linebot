@@ -21,13 +21,13 @@ const client = new line.messagingApi.MessagingApiClient({
 });
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.set("view engine", "ejs");
 
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+app.get("/ejs", (req, res) => {
+  res.render("index", {foo: "FOO"});
+})
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde");
 })
 
@@ -98,3 +98,8 @@ function handleEvent(event) {
     messages: [echo],
   });
 }
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening on ${port}`);
+});

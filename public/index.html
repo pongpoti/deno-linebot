@@ -9,14 +9,16 @@
 
 <body>
     <h1>welcome to index.html</h1>
+    <h1 id="h"></h1>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
         let idToken = "";
+        let h = document.getElementById("h");
         const main = async () => {
             await liff.init({ liffId: "2007211330-ELD8XqmV" });
             if (liff.isLoggedIn()) {
                 idToken = await liff.getIDToken();
-                window.location.replace("https://tally.so/r/w4yvGY?token=" + idToken);
+                h.innerText  = idToken;
             }
         }
     </script>

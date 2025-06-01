@@ -23,7 +23,7 @@ const client = new line.messagingApi.MessagingApiClient({
 
 const app = express();
 
-app.use("/static", express.static("public"));
+app.use("/regis", express.static("regis"));
 
 app.get("/", (_, res) => {
   res.redirect("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde");
@@ -31,6 +31,19 @@ app.get("/", (_, res) => {
 
 app.get("/callback", (req, res) => {
   res.redirect("https://pongsit-linebot.deno.dev/auth?code=" + req.query.code)
+})
+
+app.get("/test", (req, res) => {
+  axios({
+    method: "GET",
+    url: "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    headers: {
+      "Content-Type" : "application/json"
+    }
+  })
+    .then( (response) => {
+      res.send(response);
+    })
 })
 
 app.get("/auth", (req, res) => {

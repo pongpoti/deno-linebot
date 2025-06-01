@@ -5,20 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        p {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>welcome to index.html</h1>
-    <h1 id="h"></h1>
+    <p aria-busy="true"></p>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
         let idToken = "";
-        let h = document.getElementById("h");
         const main = async () => {
             await liff.init({ liffId: "2007511559-yMnLXN2D" });
             if (liff.isLoggedIn()) {
                 idToken = await liff.getIDToken();
-                h.innerText  = idToken;
                 window.location.replace("https://tally.so/r/w4yvGY?token=" + idToken);
             } else {
                 liff.login();

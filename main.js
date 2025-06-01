@@ -24,7 +24,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 app.get("/ejs", (req, res) => {
-  res.render("index", {foo: "FOO"});
+  res.render("index");
 })
 
 app.get("/", (_, res) => {

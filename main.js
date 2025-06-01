@@ -22,6 +22,11 @@ const client = new line.messagingApi.MessagingApiClient({
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening on ${port}`);
+});
+
 app.use("/regis", express.static("regis"));
 
 app.get("/", (_, res) => {
@@ -115,7 +120,4 @@ function handleEvent(event) {
   });
 }
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+

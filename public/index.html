@@ -19,8 +19,11 @@
             if (liff.isLoggedIn()) {
                 idToken = await liff.getIDToken();
                 h.innerText  = idToken;
+            } else {
+                liff.login();
             }
         }
+        main();
     </script>
 </body>
 

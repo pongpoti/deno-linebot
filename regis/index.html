@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fellow registration</title>
+    <title>TOTS Fellow registration</title>
     <script async src="https://tally.so/widgets/embed.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <style type="text/css">
@@ -51,10 +51,9 @@
             if (liff.isLoggedIn()) {
                 loading.style.display = "block";
                 idToken = await liff.getIDToken();
-                //window.location.replace("https://tally.so/r/w4yvGY?token=" + idToken);
                 tally.style.display = "block";
                 tally.setAttribute("data-tally-src", "https://tally.so/r/w4yvGY?transparentBackground=1&" + idToken);
-
+                loading.style.display = "none";
             } else {
                 liff.login();
             }

@@ -45,6 +45,7 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/tally", (reg, res) => {
+  /*
   fetch("https://api.line.me/v2/bot/message/push", {
     method: "POST",
     headers: headers,
@@ -58,6 +59,16 @@ app.get("/tally", (reg, res) => {
       ],
     }),
   });
+  */
+
+  fetch("https://api.line.me/v2/bot/chat/loading/start", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      "chatId": "U60a46a396e1df9b83a7167c51180e252",
+      "loadingSeconds": 5,
+    }),
+  });
 });
 
 app.post("/line", line.middleware(config), (req, res) => {
@@ -66,7 +77,7 @@ app.post("/line", line.middleware(config), (req, res) => {
     headers: headers,
     body: JSON.stringify({
       "chatId": "U60a46a396e1df9b83a7167c51180e252",
-      "loadingSeconds": 5
+      "loadingSeconds": 5,
     }),
   });
 

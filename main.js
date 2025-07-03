@@ -61,6 +61,15 @@ app.get("/tally", (reg, res) => {
 });
 
 app.post("/line", line.middleware(config), (req, res) => {
+  fetch("https://api.line.me/v2/bot/chat/loading/start", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      "chatId": event.source.userId,
+      "loadingSeconds": 5,
+    }),
+  });
+
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
@@ -71,15 +80,6 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  fetch("https://api.line.me/v2/bot/chat/loading/start", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      "chatId": event.source.userId,
-      "loadingSeconds": 5
-    })
-  })
-
   /*
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);

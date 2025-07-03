@@ -1,10 +1,7 @@
 import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
-import qs from "qs";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import path from "path";
 
 const headers = {
   "Content-Type": "application/json",
@@ -27,17 +24,8 @@ app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
-app.use("/regis", express.static("regis"));
-
-app.get("/", (_, res) => {
-  res.redirect(
-    "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2007211330&scope=profile%20openid&redirect_uri=https%3A%2F%2Fpongsit-linebot.deno.dev%2Fcallback&state=12345abcde",
-  );
-});
-
-app.get("/callback", (req, res) => {
-  res.redirect("https://pongsit-linebot.deno.dev/auth?code=" + req.query.code);
-});
+//register tally form
+app.use("/register", express.static("register"));
 
 app.get("/test", (req, res) => {
   axios({
@@ -50,31 +38,6 @@ app.get("/test", (req, res) => {
   })
     .then((result) => {
       res.send(result.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
-app.get("/auth", (req, res) => {
-  const code = req.query.code;
-  axios({
-    method: "post",
-    url: "https://api.line.me/oauth2/v2.1/token",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    data: qs.stringify({
-      grant_type: "authorization_code",
-      code: code,
-      redirect_uri: "https://pongsit-linebot.deno.dev/callback",
-      client_id: "2007211330",
-      client_secret: "ea3204e6ff3f9a8365c2a20de8a92568",
-    }),
-  })
-    .then((result) => {
-      const decoded = jwtDecode(result.data.id_token);
-      res.send(decoded.sub);
     })
     .catch((error) => {
       console.log(error);
@@ -108,16 +71,23 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
+  fetch("https://api.line.me/v2/bot/chat/loading/start", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      "chatId": event.source.userId,
+      "loadingSeconds": 5
+    })
+  })
+
+  /*
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);
   }
-
   const echo = { type: "text", text: event.message.text };
-
   return client.replyMessage({
     replyToken: event.replyToken,
     messages: [echo],
   });
+  */
 }
-
-

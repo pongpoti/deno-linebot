@@ -72,7 +72,6 @@ app.get("/tally", (reg, res) => {
 });
 
 app.post("/line", line.middleware(config), (req, res) => {
-
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
@@ -88,7 +87,7 @@ function handleEvent(event) {
     method: "POST",
     headers: headers,
     body: JSON.stringify({
-      "chatId": "U60a46a396e1df9b83a7167c51180e252",
+      "chatId": event.source.userId,
       "loadingSeconds": 5,
     }),
   });
@@ -96,7 +95,7 @@ function handleEvent(event) {
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);
   }
-  
+
   const echo = { type: "text", text: event.message.text };
   return client.replyMessage({
     replyToken: event.replyToken,

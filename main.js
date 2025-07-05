@@ -74,7 +74,9 @@ function handleEvent(event) {
   if (
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
-  ) {
+  // deno-lint-ignore no-empty
+  ) {}
+  else {
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",
       headers: headers,

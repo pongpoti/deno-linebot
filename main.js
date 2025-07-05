@@ -72,8 +72,8 @@ app.post("/line", line.middleware(config), (req, res) => {
 
 function handleEvent(event) {
   if (
-    event.postback.data !== "rm_main_quests" ||
-    event.postback.data !== "rm_quest_back"
+    event.postback.data == "rm_main_quests" ||
+    event.postback.data == "rm_quest_back"
   ) {
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",

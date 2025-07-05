@@ -44,8 +44,7 @@ app.get("/test", (req, res) => {
     });
 });
 
-app.get("/tally", (reg, res) => {
-  /*
+app.get("/tally", () => {
   fetch("https://api.line.me/v2/bot/message/push", {
     method: "POST",
     headers: headers,
@@ -57,16 +56,6 @@ app.get("/tally", (reg, res) => {
           "text": "Tally hook (GET)",
         },
       ],
-    }),
-  });
-  */
-
-  fetch("https://api.line.me/v2/bot/chat/loading/start", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      "chatId": "U60a46a396e1df9b83a7167c51180e252",
-      "loadingSeconds": 5,
     }),
   });
 });
@@ -82,15 +71,21 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  
-  fetch("https://api.line.me/v2/bot/chat/loading/start", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      "chatId": event.source.userId,
-      "loadingSeconds": 5,
-    }),
-  });
+  let isLoadingAnimationApplied = true;
+  const noLoadingAnimationArray = ["rm_main_quests", "rm_quest_back"];
+  for (event.postback.data of noLoadingAnimationArray) {
+    isLoadingAnimationApplied = false;
+  }
+  if (isLoadingAnimationApplied) {
+    fetch("https://api.line.me/v2/bot/chat/loading/start", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        "chatId": event.source.userId,
+        "loadingSeconds": 10,
+      }),
+    });
+  }
 
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);
@@ -101,5 +96,4 @@ function handleEvent(event) {
     replyToken: event.replyToken,
     messages: [echo],
   });
-  
 }

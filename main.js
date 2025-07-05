@@ -87,6 +87,7 @@ function handleEvent(event) {
     });
   }
 
+  /*
   if (
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
@@ -98,4 +99,5 @@ function handleEvent(event) {
       ],
     });
   }
+  */
 }

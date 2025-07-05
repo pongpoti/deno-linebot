@@ -71,12 +71,8 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  let isLoadingAnimationApplied = true;
-  const noLoadingAnimationArray = ["rm_main_quests", "rm_quest_back"];
-  for (event.postback.data of noLoadingAnimationArray) {
-    isLoadingAnimationApplied = false;
-  }
-  if (isLoadingAnimationApplied) {
+
+  if (event.postback.data !== "rm_main_quests" || "rm_quest_back") {
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",
       headers: headers,

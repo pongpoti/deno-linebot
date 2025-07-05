@@ -71,8 +71,10 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-
-  if (event.postback.data !== "rm_main_quests" || event.postback.data !== "rm_quest_back") {
+  if (
+    event.postback.data !== "rm_main_quests" ||
+    event.postback.data !== "rm_quest_back"
+  ) {
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",
       headers: headers,
@@ -83,23 +85,15 @@ function handleEvent(event) {
     });
   }
 
-  if (event.postback.data == "rm_main_quests" || event.postback.data !== "rm_quest_back") {
+  if (
+    event.postback.data == "rm_main_quests" ||
+    event.postback.data == "rm_quest_back"
+  ) {
     return client.pushMessage({
       to: event.source.userId,
       messages: [
-        { type: "text", text: event.postback.data }
-      ]
-    })
+        { type: "text", text: event.postback.data },
+      ],
+    });
   }
-  
-  if (event.type !== "message" || event.message.type !== "text") {
-    return Promise.resolve(null);
-  }
-
-  const echo = { type: "text", text: event.message.text };
-  return client.replyMessage({
-    replyToken: event.replyToken,
-    messages: [echo],
-  });
-  
 }

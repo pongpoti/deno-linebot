@@ -83,6 +83,7 @@ function handleEvent(event) {
     });
   }
 
+  /*
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);
   }
@@ -92,4 +93,5 @@ function handleEvent(event) {
     replyToken: event.replyToken,
     messages: [echo],
   });
+  */
 }

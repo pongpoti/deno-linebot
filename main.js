@@ -83,7 +83,15 @@ function handleEvent(event) {
     });
   }
 
-  /*
+  if (event.postback.data == "rm_main_quests" || event.postback.data !== "rm_quest_back") {
+    return client.pushMessage({
+      to: event.source.userId,
+      messages: [
+        { type: "text", text: event.postback.data }
+      ]
+    })
+  }
+  
   if (event.type !== "message" || event.message.type !== "text") {
     return Promise.resolve(null);
   }
@@ -93,5 +101,5 @@ function handleEvent(event) {
     replyToken: event.replyToken,
     messages: [echo],
   });
-  */
+  
 }

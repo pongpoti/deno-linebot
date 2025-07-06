@@ -2,7 +2,6 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
-import qs from "qs";
 
 const headers = {
   "Content-Type": "application/json",
@@ -30,7 +29,7 @@ app.use("/register", express.static("register"));
 
 app.get("/test", (_, res) => {
   axios.get(
-    "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
@@ -72,39 +71,110 @@ function handleEvent(event) {
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) {} else {
+  ) { } else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
     }, {
       headers: headers,
     })
-      .then(result => console.log(result))
-      .catch(error => console.error(error));
-
-    /*
-    fetch("https://api.line.me/v2/bot/chat/loading/start", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify({
-        "chatId": event.source.userId,
-        "loadingSeconds": 5,
-      }),
-    });
-    */
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
   }
 
-  /*
-  if (
-    event.postback.data == "rm_main_quests" ||
-    event.postback.data == "rm_quest_back"
-  ) {
-    return client.pushMessage({
-      to: event.source.userId,
-      messages: [
-        { type: "text", text: event.postback.data },
-      ],
-    });
+  if (event.postback.data !== "") {
+    if (checkRegistration(event.source.userId)) {
+      return client.pushMessage({
+        to: event.source.userId,
+        messages: [
+          { type: "text", text: event.postback.data },
+        ],
+      });
+    }
   }
-  */
+
+}
+
+function checkRegistration(userId) {
+  let isRegistered = false;
+  axios.get(
+    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  )
+    .then((result) => {
+      const databaseArray = JSON.parse(result.data);
+      for (i = 0; i < databaseArray.length; i++) {
+        if (userId == databaseArray[i][0]) {
+          isRegistered = true;
+          break;
+        }
+      }
+      if (!isRegistered) {
+        client.pushMessage({
+          "to": userId,
+          "messages": [
+            {
+              "type": "flex",
+              "altText": "Please register",
+              "contents": {
+                "type": "bubble",
+                "size": "micro",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "text",
+                          "text": "click to register",
+                          "weight": "bold",
+                          "align": "center",
+                          "color": "#354c73",
+                          "size": "md"
+                        }
+                      ],
+                      "backgroundColor": "#FFFFFF",
+                      "height": "35px"
+                    },
+                    {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "text",
+                          "text": "shadow",
+                          "color": "#354c73"
+                        }
+                      ],
+                      "backgroundColor": "#354c73",
+                      "height": "6px"
+                    }
+                  ],
+                  "borderWidth": "semi-bold",
+                  "borderColor": "#354c73",
+                  "cornerRadius": "md",
+                  "action": {
+                    "type": "uri",
+                    "label": "action",
+                    "uri": "https://liff.line.me/2007511559-yMnLXN2D"
+                  },
+                  "paddingBottom": "none",
+                  "paddingStart": "none",
+                  "paddingEnd": "none"
+                }
+              }
+            }
+          ]
+        })
+      }
+    })
+    .catch((error) => console.error(error));
+  return isRegistered;
 }

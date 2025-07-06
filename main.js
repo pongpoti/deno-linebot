@@ -29,40 +29,19 @@ app.listen(port, () => {
 app.use("/register", express.static("register"));
 
 app.get("/test", (_, res) => {
-  axios({
-    method: "get",
-    url:
-      "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
-    headers: {
-      "Content-Type": "application/json",
+  axios.get(
+    "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-  })
-    .then((result) => {
-      res.send(result.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  )
+    .then((result) => res.send(result.data))
+    .catch((error) => console.error(error));
 });
 
 app.get("/tally", () => {
-
-  /*
-  fetch("https://api.line.me/v2/bot/message/push", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      "to": "U60a46a396e1df9b83a7167c51180e252",
-      "messages": [
-        {
-          "type": "text",
-          "text": "Tally hook (GET)",
-        },
-      ],
-    }),
-  });
-  */
-
   axios.post("https://api.line.me/v2/bot/message/push", {
     "to": "U60a46a396e1df9b83a7167c51180e252",
     "messages": [
@@ -74,21 +53,16 @@ app.get("/tally", () => {
   }, {
     headers: headers,
   })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error(error.response);
-    });
-
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
 });
 
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error);
       res.status(500).end();
     });
 });
@@ -99,6 +73,16 @@ function handleEvent(event) {
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
   ) {} else {
+    axios.post("https://api.line.me/v2/bot/chat/loading/start", {
+      "chatId": event.source.userId,
+      "loadingSeconds": 5,
+    }, {
+      headers: headers,
+    })
+      .then(result => console.log(result))
+      .catch(error => console.error(error));
+
+    /*
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",
       headers: headers,
@@ -107,6 +91,7 @@ function handleEvent(event) {
         "loadingSeconds": 5,
       }),
     });
+    */
   }
 
   /*

@@ -2,6 +2,7 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
+import { kMaxLength } from "node:buffer";
 
 const headers = {
   "Content-Type": "application/json",
@@ -28,6 +29,7 @@ app.listen(port, () => {
 app.use("/register", express.static("register"));
 
 app.get("/test", (req, res) => {
+  /*
   axios({
     method: "get",
     url:
@@ -41,6 +43,20 @@ app.get("/test", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
+    });
+  */
+  fetch(
+    "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+  )
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((error) => {
+      res.send(error);
     });
 });
 
@@ -74,9 +90,8 @@ function handleEvent(event) {
   if (
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
-  // deno-lint-ignore no-empty
-  ) {}
-  else {
+    // deno-lint-ignore no-empty
+  ) {} else {
     fetch("https://api.line.me/v2/bot/chat/loading/start", {
       method: "POST",
       headers: headers,

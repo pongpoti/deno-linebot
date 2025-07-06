@@ -90,8 +90,70 @@ function handleEvent(event) {
           { type: "text", text: event.postback.data },
         ],
       });
+    } else {
+      client.pushMessage({
+        "to": userId,
+        "messages": [
+          {
+            "type": "flex",
+            "altText": "Please register",
+            "contents": {
+              "type": "bubble",
+              "size": "micro",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "click to register",
+                        "weight": "bold",
+                        "align": "center",
+                        "color": "#354c73",
+                        "size": "md"
+                      }
+                    ],
+                    "backgroundColor": "#FFFFFF",
+                    "height": "35px"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "shadow",
+                        "color": "#354c73"
+                      }
+                    ],
+                    "backgroundColor": "#354c73",
+                    "height": "6px"
+                  }
+                ],
+                "borderWidth": "semi-bold",
+                "borderColor": "#354c73",
+                "cornerRadius": "md",
+                "action": {
+                  "type": "uri",
+                  "label": "action",
+                  "uri": "https://liff.line.me/2007511559-yMnLXN2D"
+                },
+                "paddingBottom": "none",
+                "paddingStart": "none",
+                "paddingEnd": "none"
+              }
+            }
+          }
+        ]
+      })
     }
   }
+
+
 
 }
 
@@ -117,68 +179,5 @@ function checkRegistration(userId) {
       break;
     }
   }
-
-  if (!isRegistered) {
-    client.pushMessage({
-      "to": userId,
-      "messages": [
-        {
-          "type": "flex",
-          "altText": "Please register",
-          "contents": {
-            "type": "bubble",
-            "size": "micro",
-            "body": {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [
-                {
-                  "type": "box",
-                  "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "click to register",
-                      "weight": "bold",
-                      "align": "center",
-                      "color": "#354c73",
-                      "size": "md"
-                    }
-                  ],
-                  "backgroundColor": "#FFFFFF",
-                  "height": "35px"
-                },
-                {
-                  "type": "box",
-                  "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "shadow",
-                      "color": "#354c73"
-                    }
-                  ],
-                  "backgroundColor": "#354c73",
-                  "height": "6px"
-                }
-              ],
-              "borderWidth": "semi-bold",
-              "borderColor": "#354c73",
-              "cornerRadius": "md",
-              "action": {
-                "type": "uri",
-                "label": "action",
-                "uri": "https://liff.line.me/2007511559-yMnLXN2D"
-              },
-              "paddingBottom": "none",
-              "paddingStart": "none",
-              "paddingEnd": "none"
-            }
-          }
-        }
-      ]
-    })
-  }
-
   return isRegistered;
 }

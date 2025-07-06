@@ -2,7 +2,7 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
-import { kMaxLength } from "node:buffer";
+import qs from "qs";
 
 const headers = {
   "Content-Type": "application/json",
@@ -29,7 +29,6 @@ app.listen(port, () => {
 app.use("/register", express.static("register"));
 
 app.get("/test", (_, res) => {
-  /*
   axios({
     method: "get",
     url:
@@ -44,25 +43,10 @@ app.get("/test", (_, res) => {
     .catch((error) => {
       console.log(error);
     });
-  */
-  fetch(
-    "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  )
-    .then((result) => {
-      res.send(result.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 });
 
 app.get("/tally", () => {
+  /*
   fetch("https://api.line.me/v2/bot/message/push", {
     method: "POST",
     headers: headers,
@@ -75,6 +59,21 @@ app.get("/tally", () => {
         },
       ],
     }),
+  });
+  */
+  axios({
+    method: "POST",
+    headers: headers,
+    data: qs.stringify({
+      "to": "U60a46a396e1df9b83a7167c51180e252",
+      "messages": [
+        {
+          "type": "text",
+          "text": "Tally hook (GET)",
+        },
+      ],
+    }),
+    url: "https://api.line.me/v2/bot/message/push",
   });
 });
 

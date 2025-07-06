@@ -1,7 +1,7 @@
 {
   "imports": {
     "@line/bot-sdk": "npm:@line/bot-sdk@^9.9.0",
-    "axios": "npm:axios@^1.9.0",
+    "axios": "npm:axios@^1.10.0",
     "ejs": "npm:ejs@^3.1.10",
     "express": "npm:express@^5.1.0",
     "jsonwebtoken": "npm:jsonwebtoken@^9.0.2",

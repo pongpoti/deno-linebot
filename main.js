@@ -92,7 +92,7 @@ function handleEvent(event) {
       });
     } else {
       client.pushMessage({
-        "to": userId,
+        "to": event.source.userId,
         "messages": [
           {
             "type": "flex",

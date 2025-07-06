@@ -71,7 +71,7 @@ function handleEvent(event) {
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) { } else {
+  ) {} else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -114,11 +114,11 @@ function handleEvent(event) {
                         "weight": "bold",
                         "align": "center",
                         "color": "#354c73",
-                        "size": "md"
-                      }
+                        "size": "md",
+                      },
                     ],
                     "backgroundColor": "#FFFFFF",
-                    "height": "35px"
+                    "height": "35px",
                   },
                   {
                     "type": "box",
@@ -127,12 +127,12 @@ function handleEvent(event) {
                       {
                         "type": "text",
                         "text": "shadow",
-                        "color": "#354c73"
-                      }
+                        "color": "#354c73",
+                      },
                     ],
                     "backgroundColor": "#354c73",
-                    "height": "6px"
-                  }
+                    "height": "6px",
+                  },
                 ],
                 "borderWidth": "semi-bold",
                 "borderColor": "#354c73",
@@ -140,26 +140,22 @@ function handleEvent(event) {
                 "action": {
                   "type": "uri",
                   "label": "action",
-                  "uri": "https://liff.line.me/2007511559-yMnLXN2D"
+                  "uri": "https://liff.line.me/2007511559-yMnLXN2D",
                 },
                 "paddingBottom": "none",
                 "paddingStart": "none",
-                "paddingEnd": "none"
-              }
-            }
-          }
-        ]
-      })
+                "paddingEnd": "none",
+              },
+            },
+          },
+        ],
+      });
     }
   }
-
-
-
 }
 
 function checkRegistration(userId) {
   let isRegistered = false;
-  let databaseArray = [];
   axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
@@ -169,15 +165,14 @@ function checkRegistration(userId) {
     },
   )
     .then((result) => {
-      databaseArray = JSON.parse(result.data);
+      const databaseArray = JSON.parse(result.data);
+      for (i = 0; i < databaseArray.length; i++) {
+        if (userId == databaseArray[i][0]) {
+          isRegistered = true;
+          break;
+        }
+      }
     })
     .catch((error) => console.error(error));
-
-  for (i = 0; i < databaseArray.length; i++) {
-    if (userId == databaseArray[i][0]) {
-      isRegistered = true;
-      break;
-    }
-  }
   return isRegistered;
 }

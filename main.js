@@ -97,6 +97,7 @@ function handleEvent(event) {
 
 function checkRegistration(userId) {
   let isRegistered = false;
+  let databaseArray = [];
   axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
@@ -106,75 +107,78 @@ function checkRegistration(userId) {
     },
   )
     .then((result) => {
-      const databaseArray = JSON.parse(result.data);
-      for (i = 0; i < databaseArray.length; i++) {
-        if (userId == databaseArray[i][0]) {
-          isRegistered = true;
-          break;
-        }
-      }
-      if (!isRegistered) {
-        client.pushMessage({
-          "to": userId,
-          "messages": [
-            {
-              "type": "flex",
-              "altText": "Please register",
-              "contents": {
-                "type": "bubble",
-                "size": "micro",
-                "body": {
+      databaseArray = JSON.parse(result.data);
+    })
+    .catch((error) => console.error(error));
+
+  for (i = 0; i < databaseArray.length; i++) {
+    if (userId == databaseArray[i][0]) {
+      isRegistered = true;
+      break;
+    }
+  }
+
+  if (!isRegistered) {
+    client.pushMessage({
+      "to": userId,
+      "messages": [
+        {
+          "type": "flex",
+          "altText": "Please register",
+          "contents": {
+            "type": "bubble",
+            "size": "micro",
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
                   "type": "box",
                   "layout": "vertical",
                   "contents": [
                     {
-                      "type": "box",
-                      "layout": "vertical",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": "click to register",
-                          "weight": "bold",
-                          "align": "center",
-                          "color": "#354c73",
-                          "size": "md"
-                        }
-                      ],
-                      "backgroundColor": "#FFFFFF",
-                      "height": "35px"
-                    },
-                    {
-                      "type": "box",
-                      "layout": "vertical",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": "shadow",
-                          "color": "#354c73"
-                        }
-                      ],
-                      "backgroundColor": "#354c73",
-                      "height": "6px"
+                      "type": "text",
+                      "text": "click to register",
+                      "weight": "bold",
+                      "align": "center",
+                      "color": "#354c73",
+                      "size": "md"
                     }
                   ],
-                  "borderWidth": "semi-bold",
-                  "borderColor": "#354c73",
-                  "cornerRadius": "md",
-                  "action": {
-                    "type": "uri",
-                    "label": "action",
-                    "uri": "https://liff.line.me/2007511559-yMnLXN2D"
-                  },
-                  "paddingBottom": "none",
-                  "paddingStart": "none",
-                  "paddingEnd": "none"
+                  "backgroundColor": "#FFFFFF",
+                  "height": "35px"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "shadow",
+                      "color": "#354c73"
+                    }
+                  ],
+                  "backgroundColor": "#354c73",
+                  "height": "6px"
                 }
-              }
+              ],
+              "borderWidth": "semi-bold",
+              "borderColor": "#354c73",
+              "cornerRadius": "md",
+              "action": {
+                "type": "uri",
+                "label": "action",
+                "uri": "https://liff.line.me/2007511559-yMnLXN2D"
+              },
+              "paddingBottom": "none",
+              "paddingStart": "none",
+              "paddingEnd": "none"
             }
-          ]
-        })
-      }
+          }
+        }
+      ]
     })
-    .catch((error) => console.error(error));
+  }
+
   return isRegistered;
 }

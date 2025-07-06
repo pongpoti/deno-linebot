@@ -28,7 +28,8 @@ app.listen(port, () => {
 //register tally form
 app.use("/register", express.static("register"));
 
-app.get("/test", (req, res) => {
+app.get("/test", (_, res) => {
+  /*
   axios({
     method: "get",
     url:
@@ -43,21 +44,22 @@ app.get("/test", (req, res) => {
     .catch((error) => {
       console.log(error);
     });
-
-  /*
-  fetch("https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec", {
-    method: "GET",
-    headers: { 
-      "Content-Type": "application/json" }
-    }
+  */
+  fetch(
+    "https://script.google.com/macros/s/AKfycbze4nXM_U1ol6s0lt4nF6ZQjIoL45x0DuKS-y9Q44CNk2cPgQnieaYNQl_bL2VVYR2u/exec",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
   )
     .then((result) => {
       res.send(result.data);
     })
     .catch((error) => {
-      res.send(error);
+      console.log(error);
     });
-  */
 });
 
 app.get("/tally", () => {

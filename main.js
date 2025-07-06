@@ -85,13 +85,13 @@ function handleEvent(event) {
   if (event.postback.data !== "") {
     if (checkRegistration(event.source.userId)) {
       return client.pushMessage({
-        to: event.source.userId,
-        messages: [
-          { type: "text", text: event.postback.data },
+        "to": event.source.userId,
+        "messages": [
+          { "type": "text", "text": event.postback.data },
         ],
       });
     } else {
-      client.pushMessage({
+      return client.pushMessage({
         "to": event.source.userId,
         "messages": [
           {

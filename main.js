@@ -46,6 +46,7 @@ app.get("/test", (_, res) => {
 });
 
 app.get("/tally", () => {
+
   /*
   fetch("https://api.line.me/v2/bot/message/push", {
     method: "POST",
@@ -61,20 +62,25 @@ app.get("/tally", () => {
     }),
   });
   */
-  axios({
-    method: "POST",
+
+  axios.post("https://api.line.me/v2/bot/message/push", {
+    "to": "U60a46a396e1df9b83a7167c51180e252",
+    "messages": [
+      {
+        "type": "text",
+        "text": "Tally hook (GET)",
+      },
+    ],
+  }, {
     headers: headers,
-    data: qs.stringify({
-      "to": "U60a46a396e1df9b83a7167c51180e252",
-      "messages": [
-        {
-          "type": "text",
-          "text": "Tally hook (GET)",
-        },
-      ],
-    }),
-    url: "https://api.line.me/v2/bot/message/push",
-  });
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error.response);
+    });
+
 });
 
 app.post("/line", line.middleware(config), (req, res) => {

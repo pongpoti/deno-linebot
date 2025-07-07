@@ -67,6 +67,16 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
+  const userProfile = new Object();
+  axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
+    headers: headers,
+  })
+    .then((result) => {
+      userProfile.displayName = result.displayName;
+      userProfile.pictureUrl = result.pictureUrl;
+    })
+    .catch((error) => console.error(error));
+
   if (
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
@@ -99,52 +109,31 @@ function handleEvent(event) {
             "altText": "Please register",
             "contents": {
               "type": "bubble",
-              "size": "micro",
-              "body": {
+              "size": "deca",
+              "header": {
                 "type": "box",
                 "layout": "vertical",
                 "contents": [
                   {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "click to register",
-                        "weight": "bold",
-                        "align": "center",
-                        "color": "#354c73",
-                        "size": "md",
-                      },
-                    ],
-                    "backgroundColor": "#FFFFFF",
-                    "height": "35px",
+                    "type": "image",
+                    "url": userProfile.pictureUrl,
+                    "size": "xs",
                   },
                   {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "shadow",
-                        "color": "#354c73",
-                      },
-                    ],
-                    "backgroundColor": "#354c73",
-                    "height": "6px",
+                    "type": "text",
+                    "text": "Hi, " + userProfile.displayName,
+                    "color": "#FFFFFF",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Click to register",
+                    "color": "#FFFFFF",
+                    "weight": "regular",
+                    "decoration": "underline",
                   },
                 ],
-                "borderWidth": "semi-bold",
-                "borderColor": "#354c73",
-                "cornerRadius": "md",
-                "action": {
-                  "type": "uri",
-                  "label": "action",
-                  "uri": "https://liff.line.me/2007511559-yMnLXN2D",
-                },
-                "paddingBottom": "none",
-                "paddingStart": "none",
-                "paddingEnd": "none",
+                "backgroundColor": "#354c73",
+                "alignItems": "center",
               },
             },
           },

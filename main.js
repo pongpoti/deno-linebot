@@ -2,6 +2,7 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
+import { userInfo } from "node:os";
 
 const headers = {
   "Content-Type": "application/json",
@@ -67,7 +68,7 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  const userProfile = {};
+  userProfile = new Object();
   axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
     headers: headers,
   })
@@ -116,12 +117,12 @@ function handleEvent(event) {
                 "contents": [
                   {
                     "type": "image",
-                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+                    "url": userProfile.pictureUrl,
                     "size": "xs"
                   },
                   {
                     "type": "text",
-                    "text": "Hi, {displayName}",
+                    "text": "Hi, " + userProfile.displayName,
                     "color": "#FFFFFF"
                   },
                   {

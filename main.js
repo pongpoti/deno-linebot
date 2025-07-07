@@ -81,7 +81,7 @@ function handleEvent(event) {
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) {} else {
+  ) { } else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -116,25 +116,25 @@ function handleEvent(event) {
                 "contents": [
                   {
                     "type": "image",
-                    "url": userProfile.pictureUrl,
-                    "size": "xs",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+                    "size": "xs"
                   },
                   {
                     "type": "text",
-                    "text": "Hi, " + userProfile.displayName,
-                    "color": "#FFFFFF",
+                    "text": "Hi, {displayName}",
+                    "color": "#FFFFFF"
                   },
                   {
                     "type": "text",
                     "text": "Click to register",
                     "color": "#FFFFFF",
                     "weight": "regular",
-                    "decoration": "underline",
-                  },
+                    "decoration": "underline"
+                  }
                 ],
                 "backgroundColor": "#354c73",
-                "alignItems": "center",
-              },
+                "alignItems": "center"
+              }
             },
           },
         ],

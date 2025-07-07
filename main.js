@@ -57,6 +57,17 @@ app.get("/tally", () => {
     .catch((error) => console.error(error));
 });
 
+app.get("profile", (_, res) => {
+  axios.get(
+    "https://api.line.me/v2/bot/profile/U60a46a396e1df9b83a7167c51180e252",
+    {
+      headers: headers,
+    },
+  )
+    .then((result) => res.json(result.data))
+    .catch((error) => console.error(error));
+});
+
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
@@ -83,7 +94,7 @@ function handleEvent(event) {
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) { } else {
+  ) {} else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -119,24 +130,24 @@ function handleEvent(event) {
                   {
                     "type": "image",
                     "url": pictureUrl,
-                    "size": "xs"
+                    "size": "xs",
                   },
                   {
                     "type": "text",
                     "text": "Hi, " + displayName,
-                    "color": "#FFFFFF"
+                    "color": "#FFFFFF",
                   },
                   {
                     "type": "text",
                     "text": "Click to register",
                     "color": "#FFFFFF",
                     "weight": "regular",
-                    "decoration": "underline"
-                  }
+                    "decoration": "underline",
+                  },
                 ],
                 "backgroundColor": "#354c73",
-                "alignItems": "center"
-              }
+                "alignItems": "center",
+              },
             },
           },
         ],

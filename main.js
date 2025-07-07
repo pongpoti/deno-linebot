@@ -57,7 +57,7 @@ app.get("/tally", () => {
     .catch((error) => console.error(error));
 });
 
-app.get("profile", (_, res) => {
+app.get("/profile", (_, res) => {
   axios.get(
     "https://api.line.me/v2/bot/profile/U60a46a396e1df9b83a7167c51180e252",
     {

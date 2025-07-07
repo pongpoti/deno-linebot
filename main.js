@@ -67,13 +67,13 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  const userProfile = new Object();
+  const userProfile = {};
   axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
     headers: headers,
   })
     .then((result) => {
-      userProfile.displayName = result.displayName;
-      userProfile.pictureUrl = result.pictureUrl;
+      userProfile.displayName = result.data.displayName;
+      userProfile.pictureUrl = result.data.pictureUrl;
     })
     .catch((error) => console.error(error));
 

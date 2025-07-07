@@ -79,14 +79,14 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  displayName = "";
-  pictureUrl = "";
+  userProfile = {};
   axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
     headers: headers,
   })
     .then((result) => {
-      displayName = result.data.displayName;
-      pictureUrl = result.data.pictureUrl;
+      parsedResult = JSON.parse(result.data);
+      userProfile.displayName = parsedResult.displayName;
+      userProfile.pictureUrl = parsedResult.pictureUrl;
     })
     .catch((error) => console.error(error));
 
@@ -129,12 +129,12 @@ function handleEvent(event) {
                 "contents": [
                   {
                     "type": "image",
-                    "url": pictureUrl,
+                    "url": userProfile.pictureUrl,
                     "size": "xs",
                   },
                   {
                     "type": "text",
-                    "text": "Hi, " + displayName,
+                    "text": "Hi, " + userProfile.displayName,
                     "color": "#FFFFFF",
                   },
                   {

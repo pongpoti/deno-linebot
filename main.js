@@ -80,13 +80,14 @@ app.post("/line", line.middleware(config), (req, res) => {
 
 function handleEvent(event) {
   userProfile = {};
+
   axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
     headers: headers,
   })
     .then((result) => {
-      parsedResult = JSON.parse(result.data);
-      userProfile.displayName = parsedResult.displayName;
-      userProfile.pictureUrl = parsedResult.pictureUrl;
+      parsedResult = result.data;
+      //userProfile.displayName = parsedResult.displayName;
+      //userProfile.pictureUrl = parsedResult.pictureUrl;
     })
     .catch((error) => console.error(error));
 
@@ -130,12 +131,12 @@ function handleEvent(event) {
               "contents": [
                 {
                   "type": "image",
-                  "url": userProfile.pictureUrl,
+                  "url": "https://sprofile.line-scdn.net/0h0PUu0bv6b394DEdRbBoRAAhcbBVbfTZtVW11ShkIMBtCPH0tUm13GEsEMUZNaC0rADgpSUoIOE90HxgZZlqTS388Mk5EOi0vV24nnQ",
                   "size": "xs",
                 },
                 {
                   "type": "text",
-                  "text": "Hi, " + userProfile.displayName,
+                  "text": "Hi, " + parsedResult,
                   "color": "#FFFFFF",
                 },
                 {

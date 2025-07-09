@@ -71,6 +71,7 @@ app.get("/profile", (_, res) => {
           { "type": "text", "text": result.data.displayName },
         ],
       });
+      res.send(result.data);
     })
     .catch((error) => console.error(error));
 });
@@ -85,12 +86,11 @@ app.post("/line", line.middleware(config), (req, res) => {
     });
 });
 
-function handleEvent(event) {
+async function handleEvent(event) {
   if (
-    event.postback.data == "rm_main_quests" ||
-    event.postback.data == "rm_quest_back"
-    // deno-lint-ignore no-empty
-  ) {} else {
+    event.postback.data !== "rm_main_quests" &&
+    event.postback.data !== "rm_quest_back"
+  ) {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -101,16 +101,14 @@ function handleEvent(event) {
       .catch((error) => console.error(error));
   }
 
-  if (event.postback.data !== "") {
-    /*
-    return client.pushMessage({
-      "to": event.source.userId,
-      "messages": [
-        { "type": "text", "text": event.postback.data },
-      ],
-    });
-    */
+  const userProfile = await axios.get(
+    "https://api.line.me/v2/bot/profile/" + event.source.userId,
+    {
+      headers: headers,
+    },
+  );
 
+  if (event.postback.data !== "") {
     return client.pushMessage({
       "to": event.source.userId,
       "messages": [
@@ -126,13 +124,12 @@ function handleEvent(event) {
               "contents": [
                 {
                   "type": "image",
-                  "url":
-                    "https://sprofile.line-scdn.net/0h0PUu0bv6b394DEdRbBoRAAhcbBVbfTZtVW11ShkIMBtCPH0tUm13GEsEMUZNaC0rADgpSUoIOE90HxgZZlqTS388Mk5EOi0vV24nnQ",
+                  "url": userProfile.data.pictureUrl,
                   "size": "xs",
                 },
                 {
                   "type": "text",
-                  "text": "Hi, ",
+                  "text": "Hi, " + userProfile.data.displayName,
                   "color": "#FFFFFF",
                 },
                 {

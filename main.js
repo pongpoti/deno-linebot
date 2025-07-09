@@ -64,7 +64,15 @@ app.get("/profile", (_, res) => {
       headers: headers,
     },
   )
-    .then((result) => res.send(result.data))
+    .then((result) => {
+      const parse = JSON.parse(result.data);
+      client.pushMessage({
+        "to": "U60a46a396e1df9b83a7167c51180e252",
+        "messages": [
+          { "type": "text", "text": parse.displayName },
+        ],
+      });
+    })
     .catch((error) => console.error(error));
 });
 
@@ -79,21 +87,11 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 function handleEvent(event) {
-  parsedResult = {};
-
-  axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
-    headers: headers,
-  })
-    .then((result) => {
-      parsedResult = JSON.parse(result.data);
-    })
-    .catch((error) => console.error(error));
-
   if (
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) { } else {
+  ) {} else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -104,6 +102,16 @@ function handleEvent(event) {
       .catch((error) => console.error(error));
   }
 
+  parsedResult = {};
+
+  axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
+    headers: headers,
+  })
+    .then((result) => {
+      parsedResult = JSON.parse(result.data);
+    })
+    .catch((error) => console.error(error));
+
   if (event.postback.data !== "") {
     /*
     return client.pushMessage({
@@ -113,7 +121,7 @@ function handleEvent(event) {
       ],
     });
     */
-    
+
     return client.pushMessage({
       "to": event.source.userId,
       "messages": [
@@ -129,7 +137,8 @@ function handleEvent(event) {
               "contents": [
                 {
                   "type": "image",
-                  "url": "https://sprofile.line-scdn.net/0h0PUu0bv6b394DEdRbBoRAAhcbBVbfTZtVW11ShkIMBtCPH0tUm13GEsEMUZNaC0rADgpSUoIOE90HxgZZlqTS388Mk5EOi0vV24nnQ",
+                  "url":
+                    "https://sprofile.line-scdn.net/0h0PUu0bv6b394DEdRbBoRAAhcbBVbfTZtVW11ShkIMBtCPH0tUm13GEsEMUZNaC0rADgpSUoIOE90HxgZZlqTS388Mk5EOi0vV24nnQ",
                   "size": "xs",
                 },
                 {
@@ -152,7 +161,6 @@ function handleEvent(event) {
         },
       ],
     });
-    
   }
 }
 

@@ -88,6 +88,7 @@ async function handleEvent(event) {
     })
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
+    //check whether user already register
     if(!checkRegistration) {
       return client.pushMessage({
         "to": event.source.userId,

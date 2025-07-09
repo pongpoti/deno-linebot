@@ -57,25 +57,6 @@ app.get("/tally", () => {
     .catch((error) => console.error(error));
 });
 
-app.get("/profile", (_, res) => {
-  axios.get(
-    "https://api.line.me/v2/bot/profile/U60a46a396e1df9b83a7167c51180e252",
-    {
-      headers: headers,
-    },
-  )
-    .then((result) => {
-      client.pushMessage({
-        "to": "U60a46a396e1df9b83a7167c51180e252",
-        "messages": [
-          { "type": "text", "text": result.data.displayName },
-        ],
-      });
-      res.send(result.data);
-    })
-    .catch((error) => console.error(error));
-});
-
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
@@ -87,6 +68,14 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 async function handleEvent(event) {
+  //retrieve user profile
+  const userProfile = await axios.get(
+    "https://api.line.me/v2/bot/profile/" + event.source.userId,
+    {
+      headers: headers,
+    },
+  );
+  //start
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
@@ -99,54 +88,46 @@ async function handleEvent(event) {
     })
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
-  }
-
-  const userProfile = await axios.get(
-    "https://api.line.me/v2/bot/profile/" + event.source.userId,
-    {
-      headers: headers,
-    },
-  );
-
-  if (event.postback.data !== "") {
-    return client.pushMessage({
-      "to": event.source.userId,
-      "messages": [
-        {
-          "type": "flex",
-          "altText": "Please register",
-          "contents": {
-            "type": "bubble",
-            "size": "deca",
-            "header": {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [
-                {
-                  "type": "image",
-                  "url": userProfile.data.pictureUrl,
-                  "size": "xs",
-                },
-                {
-                  "type": "text",
-                  "text": "Hi, " + userProfile.data.displayName,
-                  "color": "#FFFFFF",
-                },
-                {
-                  "type": "text",
-                  "text": "Click to register",
-                  "color": "#FFFFFF",
-                  "weight": "regular",
-                  "decoration": "underline",
-                },
-              ],
-              "backgroundColor": "#354c73",
-              "alignItems": "center",
+    if(!checkRegistration) {
+      return client.pushMessage({
+        "to": event.source.userId,
+        "messages": [
+          {
+            "type": "flex",
+            "altText": "Please register",
+            "contents": {
+              "type": "bubble",
+              "size": "deca",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "image",
+                    "url": userProfile.data.pictureUrl,
+                    "size": "xs",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Hi, " + userProfile.data.displayName,
+                    "color": "#FFFFFF",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Click to register",
+                    "color": "#FFFFFF",
+                    "weight": "regular",
+                    "decoration": "underline",
+                  },
+                ],
+                "backgroundColor": "#354c73",
+                "alignItems": "center",
+              },
             },
           },
-        },
-      ],
-    });
+        ],
+      });
+    }
   }
 }
 

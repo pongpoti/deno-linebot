@@ -86,7 +86,7 @@ async function handleEvent(event) {
     }, {
       headers: headers,
     })
-      .then((result) => console.log(result))
+      .then(() => {})
       .catch((error) => console.error(error));
     //check whether user already register
     if (!checkRegistration(event.source.userId)) {
@@ -144,6 +144,7 @@ function checkRegistration(userId) {
   )
     .then((result) => {
       const databaseArray = JSON.parse(result.data);
+      console.log(databaseArray);
       for (i = 0; i < databaseArray.length; i++) {
         if (databaseArray[i][0] === userId) {
           isRegistered = true;

@@ -102,16 +102,6 @@ function handleEvent(event) {
       .catch((error) => console.error(error));
   }
 
-  parsedResult = {};
-
-  axios.get("https://api.line.me/v2/bot/profile/" + event.source.userId, {
-    headers: headers,
-  })
-    .then((result) => {
-      parsedResult = JSON.parse(result.data);
-    })
-    .catch((error) => console.error(error));
-
   if (event.postback.data !== "") {
     /*
     return client.pushMessage({
@@ -143,7 +133,7 @@ function handleEvent(event) {
                 },
                 {
                   "type": "text",
-                  "text": "Hi, " + parsedResult.displayName,
+                  "text": "Hi, ",
                   "color": "#FFFFFF",
                 },
                 {

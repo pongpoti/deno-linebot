@@ -94,7 +94,7 @@ function handleEvent(event) {
     event.postback.data == "rm_main_quests" ||
     event.postback.data == "rm_quest_back"
     // deno-lint-ignore no-empty
-  ) {} else {
+  ) { } else {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
       "loadingSeconds": 5,
@@ -106,53 +106,54 @@ function handleEvent(event) {
   }
 
   if (event.postback.data !== "") {
-    if (checkRegistration(event.source.userId)) {
-      return client.pushMessage({
-        "to": event.source.userId,
-        "messages": [
-          { "type": "text", "text": event.postback.data },
-        ],
-      });
-    } else {
-      return client.pushMessage({
-        "to": event.source.userId,
-        "messages": [
-          {
-            "type": "flex",
-            "altText": "Please register",
-            "contents": {
-              "type": "bubble",
-              "size": "deca",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "image",
-                    "url": userProfile.pictureUrl,
-                    "size": "xs",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Hi, " + userProfile.displayName,
-                    "color": "#FFFFFF",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Click to register",
-                    "color": "#FFFFFF",
-                    "weight": "regular",
-                    "decoration": "underline",
-                  },
-                ],
-                "backgroundColor": "#354c73",
-                "alignItems": "center",
-              },
+    /*
+    return client.pushMessage({
+      "to": event.source.userId,
+      "messages": [
+        { "type": "text", "text": event.postback.data },
+      ],
+    });
+    */
+    
+    return client.pushMessage({
+      "to": event.source.userId,
+      "messages": [
+        {
+          "type": "flex",
+          "altText": "Please register",
+          "contents": {
+            "type": "bubble",
+            "size": "deca",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "image",
+                  "url": userProfile.pictureUrl,
+                  "size": "xs",
+                },
+                {
+                  "type": "text",
+                  "text": "Hi, " + userProfile.displayName,
+                  "color": "#FFFFFF",
+                },
+                {
+                  "type": "text",
+                  "text": "Click to register",
+                  "color": "#FFFFFF",
+                  "weight": "regular",
+                  "decoration": "underline",
+                },
+              ],
+              "backgroundColor": "#354c73",
+              "alignItems": "center",
             },
           },
-        ],
-      });
-    }
+        },
+      ],
+    });
+    
   }
 }
 

@@ -82,14 +82,14 @@ async function handleEvent(event) {
   ) {
     axios.post("https://api.line.me/v2/bot/chat/loading/start", {
       "chatId": event.source.userId,
-      "loadingSeconds": 5,
+      "loadingSeconds": 10,
     }, {
       headers: headers,
     })
       .then((result) => console.log(result))
       .catch((error) => console.error(error));
     //check whether user already register
-    if(!checkRegistration) {
+    if (!checkRegistration(event.source.userId)) {
       return client.pushMessage({
         "to": event.source.userId,
         "messages": [
@@ -145,8 +145,9 @@ function checkRegistration(userId) {
     .then((result) => {
       const databaseArray = JSON.parse(result.data);
       for (i = 0; i < databaseArray.length; i++) {
-        if (userId == databaseArray[i][0]) {
+        if (databaseArray[i][0] === userId) {
           isRegistered = true;
+          console.log("The isRegistered Value is true");
           break;
         }
       }

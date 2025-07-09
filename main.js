@@ -64,7 +64,7 @@ app.get("/profile", (_, res) => {
       headers: headers,
     },
   )
-    .then((result) => res.json(result.data))
+    .then((result) => res.send(result.data))
     .catch((error) => console.error(error));
 });
 

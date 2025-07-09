@@ -65,11 +65,10 @@ app.get("/profile", (_, res) => {
     },
   )
     .then((result) => {
-      const parse = JSON.parse(result.data);
       client.pushMessage({
         "to": "U60a46a396e1df9b83a7167c51180e252",
         "messages": [
-          { "type": "text", "text": parse.displayName },
+          { "type": "text", "text": result.data.displayName },
         ],
       });
     })

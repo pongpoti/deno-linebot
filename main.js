@@ -73,7 +73,7 @@ function handleEvent(event) {
     event.postback.data !== "rm_quest_back"
   ) {
     loadAnimation(event.source.userId);
-    if (checkRegistration(getDatabase, getUserProfile(event.source.userId))) {
+    if (checkRegistration(getDatabase(), getUserProfile(event.source.userId))) {
       console.log("registered");
     } else {
       console.log("not register");
@@ -97,6 +97,7 @@ function loadAnimation(userId) {
 }
 
 async function getDatabase() {
+  console.log("within getDatabase()");
   const database = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
@@ -109,6 +110,7 @@ async function getDatabase() {
 }
 
 async function getUserProfile(userId) {
+  console.log("within getUserProfile()");
   const userProfile = await axios.get(
     "https://api.line.me/v2/bot/profile/" + userId,
     {

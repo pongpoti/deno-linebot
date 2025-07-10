@@ -132,23 +132,27 @@ async function handleEvent(event) {
   }
 }
 
-async function checkRegistration(userId) {
+function checkRegistration(userId) {
   let isRegistered = false;
-  const result = await axios.get(
+  axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
     },
-  );
-  console.log(result.data);
-  for (let i = 0; i < result.data.length; i++) {
-    if (result.data[i][0] === userId) {
-      isRegistered = true;
-      console.log("The isRegistered value is true");
-      break;
-    }
-  }
+  )
+    .then((result) => {
+      console.log(result.data);
+      for (let i = 0; i < result.data.length; i++) {
+        if (result.data[i][0] === userId) {
+          isRegistered = true;
+          console.log("The isRegistered value is true");
+          break;
+        }
+      }
+    })
+    .catch((error) => console.error(error));
+
   return isRegistered;
 }

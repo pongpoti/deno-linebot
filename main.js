@@ -147,13 +147,14 @@ function checkRegistration(userId) {
       for (let i = 0; i < result.data.length; i++) {
         console.log(result.data[i]);
         if (result.data[i][0] === userId) {
-          console.log("within if");
+          console.log("result.data[i][0] : " + result.data[i][0]);
+          console.log("userId : " + userId);
           isRegistered = true;
           break;
         }
       }
+      console.log("isRegistered value : " + isRegistered);
+      return isRegistered;
     })
     .catch((error) => console.error(error));
-  console.log("isRegistered value : " + isRegistered);
-  return isRegistered;
 }

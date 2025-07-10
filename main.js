@@ -112,7 +112,7 @@ async function handleEvent(event) {
 function checkRegistration(database, userProfile) {
   let isRegistered = false;
   for (let i = 0; i < database.data.length; i++) {
-    if (database.data[i][0] === userId) {
+    if (database.data[i][0] === userProfile.data.userId) {
       isRegistered = true;
       break;
     }

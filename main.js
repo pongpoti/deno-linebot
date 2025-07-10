@@ -68,96 +68,100 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 async function handleEvent(event) {
-  //retrieve user profile
-  const userProfile = await axios.get(
-    "https://api.line.me/v2/bot/profile/" + event.source.userId,
+  //instantiate loading animation
+  const post_loadingAnimation = await axios.post(
+    "https://api.line.me/v2/bot/chat/loading/start",
+    {
+      "chatId": event.source.userId,
+      "loadingSeconds": 10,
+    },
     {
       headers: headers,
     },
   );
-  //start
-  if (
-    event.postback.data !== "rm_main_quests" &&
-    event.postback.data !== "rm_quest_back"
-  ) {
-    axios.post("https://api.line.me/v2/bot/chat/loading/start", {
-      "chatId": event.source.userId,
-      "loadingSeconds": 10,
-    }, {
-      headers: headers,
-    })
-      .then(() => {
-        console.log(checkRegistration(event.source.userId));
-        /*
-        if (!checkRegistration(event.source.userId)) {
-          return client.pushMessage({
-            "to": event.source.userId,
-            "messages": [
-              {
-                "type": "flex",
-                "altText": "Please register",
-                "contents": {
-                  "type": "bubble",
-                  "size": "deca",
-                  "header": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                      {
-                        "type": "image",
-                        "url": userProfile.data.pictureUrl,
-                        "size": "xs",
-                      },
-                      {
-                        "type": "text",
-                        "text": "Hi, " + userProfile.data.displayName,
-                        "color": "#FFFFFF",
-                      },
-                      {
-                        "type": "text",
-                        "text": "Click to register",
-                        "color": "#FFFFFF",
-                        "weight": "regular",
-                        "decoration": "underline",
-                      },
-                    ],
-                    "backgroundColor": "#354c73",
-                    "alignItems": "center",
-                  },
-                },
-              },
-            ],
-          });
-        }
-        */
-      })
-      .catch((error) => console.error(error));
-  }
-}
-
-function checkRegistration(userId) {
-  let isRegistered = false;
-  axios.get(
+  //instantiate database
+  const get_database = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
     },
-  )
-    .then((result) => {
-      console.log(result.data);
-      for (let i = 0; i < result.data.length; i++) {
-        console.log(result.data[i]);
-        if (result.data[i][0] === userId) {
-          console.log("result.data[i][0] : " + result.data[i][0]);
-          console.log("userId : " + userId);
-          isRegistered = true;
-          break;
-        }
-      }
-      console.log("isRegistered value : " + isRegistered);
-      return isRegistered;
-    })
-    .catch((error) => console.error(error));
+  );
+  //instantiate user profile
+  const get_userProfile = await axios.get(
+    "https://api.line.me/v2/bot/profile/" + event.source.userId,
+    {
+      headers: headers,
+    },
+  );
+
+  console.log(post_loadingAnimation);
+  console.log(get_database.data);
+  console.log(get_userProfile.data);
+
+/*
+  if (
+    event.postback.data !== "rm_main_quests" &&
+    event.postback.data !== "rm_quest_back"
+  ) {
+    if (!checkRegistration(event.source.userId)) {
+      return client.pushMessage({
+        "to": event.source.userId,
+        "messages": [
+          {
+            "type": "flex",
+            "altText": "Please register",
+            "contents": {
+              "type": "bubble",
+              "size": "deca",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "image",
+                    "url": userProfile.data.pictureUrl,
+                    "size": "xs",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Hi, " + userProfile.data.displayName,
+                    "color": "#FFFFFF",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Click to register",
+                    "color": "#FFFFFF",
+                    "weight": "regular",
+                    "decoration": "underline",
+                  },
+                ],
+                "backgroundColor": "#354c73",
+                "alignItems": "center",
+              },
+            },
+          },
+        ],
+      });
+    }
+  }
+  */
+
+}
+
+function checkRegistration(result) {
+  let isRegistered = false;
+  console.log(result.data);
+  for (let i = 0; i < result.data.length; i++) {
+    console.log(result.data[i]);
+    if (result.data[i][0] === userId) {
+      console.log("result.data[i][0] : " + result.data[i][0]);
+      console.log("userId : " + userId);
+      isRegistered = true;
+      break;
+    }
+  }
+  console.log("isRegistered value : " + isRegistered);
+  return isRegistered;
 }

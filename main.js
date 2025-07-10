@@ -143,9 +143,8 @@ function checkRegistration(userId) {
     },
   )
     .then((result) => {
-      console.log(typeof result);
-      const data = JSON.parse(result);
-      console.log(typeof data);
+      console.log(result);
+      console.log(result.data);
       for (let i = 0; i < result.data.length; i++) {
         if (result.data[i][0] === userId) {
           isRegistered = true;

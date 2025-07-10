@@ -87,6 +87,8 @@ async function handleEvent(event) {
       headers: headers,
     })
       .then(() => {
+        console.log(checkRegistration(event.source.userId));
+        /*
         if (!checkRegistration(event.source.userId)) {
           return client.pushMessage({
             "to": event.source.userId,
@@ -127,6 +129,7 @@ async function handleEvent(event) {
             ],
           });
         }
+        */
       })
       .catch((error) => console.error(error));
   }

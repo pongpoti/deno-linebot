@@ -100,8 +100,48 @@ async function handleEvent(event) {
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
-    console.log(post_loadingAnimation);
-    console.log(checkRegistration(get_database, event.source.userId));
+    post_loadingAnimation;
+    if (checkRegistration(get_database, event.source.userId)) {
+      const userProfile = get_userProfile.data;
+      return client.pushMessage({
+        "to": event.source.userId,
+        "messages": [
+          {
+            "type": "flex",
+            "altText": "Please register",
+            "contents": {
+              "type": "bubble",
+              "size": "deca",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "image",
+                    "url": userProfile.pictureUrl,
+                    "size": "xs",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Hi, " + userProfile.displayName,
+                    "color": "#FFFFFF",
+                  },
+                  {
+                    "type": "text",
+                    "text": "Click to register",
+                    "color": "#FFFFFF",
+                    "weight": "regular",
+                    "decoration": "underline",
+                  },
+                ],
+                "backgroundColor": "#354c73",
+                "alignItems": "center",
+              },
+            },
+          },
+        ],
+      });
+    }
   }
 
   /*
@@ -155,16 +195,12 @@ async function handleEvent(event) {
 
 function checkRegistration(result, userId) {
   let isRegistered = false;
-  console.log(result.data);
   for (let i = 0; i < result.data.length; i++) {
     console.log(result.data[i]);
     if (result.data[i][0] === userId) {
-      console.log("result.data[i][0] : " + result.data[i][0]);
-      console.log("userId : " + userId);
       isRegistered = true;
       break;
     }
   }
-  console.log("isRegistered value : " + isRegistered);
   return isRegistered;
 }

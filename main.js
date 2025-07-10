@@ -69,6 +69,7 @@ app.post("/line", line.middleware(config), (req, res) => {
 
 async function handleEvent(event) {
   //instantiate loading animation
+  /*
   const post_loadingAnimation = await axios.post(
     "https://api.line.me/v2/bot/chat/loading/start",
     {
@@ -79,6 +80,7 @@ async function handleEvent(event) {
       headers: headers,
     },
   );
+  */
   //instantiate database
   const get_database = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",

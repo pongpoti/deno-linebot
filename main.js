@@ -68,19 +68,6 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 
 async function handleEvent(event) {
-  //instantiate loading animation
-  /*
-  const post_loadingAnimation = await axios.post(
-    "https://api.line.me/v2/bot/chat/loading/start",
-    {
-      "chatId": event.source.userId,
-      "loadingSeconds": 10,
-    },
-    {
-      headers: headers,
-    },
-  );
-  */
   //instantiate database
   const get_database = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
@@ -102,13 +89,28 @@ async function handleEvent(event) {
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
-    //post_loadingAnimation;
+    loadAnimation(event.source.userId);
     if (checkRegistration(get_database, get_userProfile)) {
       console.log("registered");
     } else {
       console.log("not register");
     }
   }
+}
+
+function loadAnimation(userId) {
+  axios.post(
+    "https://api.line.me/v2/bot/chat/loading/start",
+    {
+      "chatId": userId,
+      "loadingSeconds": 10,
+    },
+    {
+      headers: headers,
+    },
+  )
+    .then((result) => console.log(result.status))
+    .catch((error) => console.error(error));
 }
 
 function checkRegistration(database, userProfile) {

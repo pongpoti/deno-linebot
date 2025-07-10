@@ -143,7 +143,7 @@ async function checkRegistration(userId) {
     },
   );
   console.log(result.data);
-  for (i = 0; i < result.data.length; i++) {
+  for (let i = 0; i < result.data.length; i++) {
     if (result.data[i][0] === userId) {
       isRegistered = true;
       console.log("The isRegistered value is true");

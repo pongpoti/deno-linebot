@@ -132,27 +132,20 @@ async function handleEvent(event) {
   }
 }
 
-function checkRegistration(userId) {
+async function checkRegistration(userId) {
   let isRegistered = false;
-  axios.get(
-    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
+  const database = await axios.get("https://script.google.com/ma,cros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
-    },
-  )
-    .then((result) => {
-      const databaseArray = JSON.parse(result.data);
-      console.log(databaseArray);
-      for (i = 0; i < databaseArray.length; i++) {
-        if (databaseArray[i][0] === userId) {
-          isRegistered = true;
-          console.log("The isRegistered Value is true");
-          break;
-        }
-      }
-    })
-    .catch((error) => console.error(error));
+    });
+  for (i = 0; i < database.data.length; i++) {
+    if (database.data[i][0] === userId) {
+      isRegistered = true;
+      console.log("The isRegistered value is true");
+      break;
+    }
+  }
   return isRegistered;
 }

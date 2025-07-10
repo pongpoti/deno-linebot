@@ -96,11 +96,15 @@ async function handleEvent(event) {
     },
   );
 
-  console.log(post_loadingAnimation);
-  console.log(get_database.data);
-  console.log(get_userProfile.data);
+  if (
+    event.postback.data !== "rm_main_quests" &&
+    event.postback.data !== "rm_quest_back"
+  ) {
+    console.log(post_loadingAnimation);
+    console.log(checkRegistration(get_database, event.source.userId));
+  }
 
-/*
+  /*
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
@@ -147,10 +151,9 @@ async function handleEvent(event) {
     }
   }
   */
-
 }
 
-function checkRegistration(result) {
+function checkRegistration(result, userId) {
   let isRegistered = false;
   console.log(result.data);
   for (let i = 0; i < result.data.length; i++) {

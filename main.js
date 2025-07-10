@@ -101,58 +101,62 @@ async function handleEvent(event) {
     event.postback.data !== "rm_quest_back"
   ) {
     post_loadingAnimation;
-    if (checkRegistration(get_database, event.source.userId)) {
-      const userProfile = get_userProfile.data;
-      return client.pushMessage({
-        "to": event.source.userId,
-        "messages": [
-          {
-            "type": "flex",
-            "altText": "Please register",
-            "contents": {
-              "type": "bubble",
-              "size": "deca",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "image",
-                    "url": userProfile.pictureUrl,
-                    "size": "xs",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Hi, " + userProfile.displayName,
-                    "color": "#FFFFFF",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Click to register",
-                    "color": "#FFFFFF",
-                    "weight": "regular",
-                    "decoration": "underline",
-                  },
-                ],
-                "backgroundColor": "#354c73",
-                "alignItems": "center",
-              },
-            },
-          },
-        ],
-      });
+    if (checkRegistration(get_database, get_userProfile)) {
+      console.log("registered");
+    } else {
+      console.log("not register");
     }
   }
 
 }
 
-function checkRegistration(result, userId) {
+function checkRegistration(database, userProfile) {
   let isRegistered = false;
-  for (let i = 0; i < result.data.length; i++) {
-    if (result.data[i][0] === userId) {
+  for (let i = 0; i < database.data.length; i++) {
+    if (database.data[i][0] === userId) {
       isRegistered = true;
       break;
     }
+  }
+  if (!isRegistered) {
+    client.pushMessage({
+      "to": userProfile.data.userId,
+      "messages": [
+        {
+          "type": "flex",
+          "altText": "Please register",
+          "contents": {
+            "type": "bubble",
+            "size": "deca",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "image",
+                  "url": userProfile.data.pictureUrl,
+                  "size": "xs",
+                },
+                {
+                  "type": "text",
+                  "text": "Hi, " + userProfile.data.displayName,
+                  "color": "#FFFFFF",
+                },
+                {
+                  "type": "text",
+                  "text": "Click to register",
+                  "color": "#FFFFFF",
+                  "weight": "regular",
+                  "decoration": "underline",
+                },
+              ],
+              "backgroundColor": "#354c73",
+              "alignItems": "center",
+            },
+          },
+        },
+      ]
+    })
   }
   return isRegistered;
 }

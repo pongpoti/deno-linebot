@@ -144,59 +144,11 @@ async function handleEvent(event) {
     }
   }
 
-  /*
-  if (
-    event.postback.data !== "rm_main_quests" &&
-    event.postback.data !== "rm_quest_back"
-  ) {
-    if (!checkRegistration(event.source.userId)) {
-      return client.pushMessage({
-        "to": event.source.userId,
-        "messages": [
-          {
-            "type": "flex",
-            "altText": "Please register",
-            "contents": {
-              "type": "bubble",
-              "size": "deca",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "image",
-                    "url": userProfile.data.pictureUrl,
-                    "size": "xs",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Hi, " + userProfile.data.displayName,
-                    "color": "#FFFFFF",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Click to register",
-                    "color": "#FFFFFF",
-                    "weight": "regular",
-                    "decoration": "underline",
-                  },
-                ],
-                "backgroundColor": "#354c73",
-                "alignItems": "center",
-              },
-            },
-          },
-        ],
-      });
-    }
-  }
-  */
 }
 
 function checkRegistration(result, userId) {
   let isRegistered = false;
   for (let i = 0; i < result.data.length; i++) {
-    console.log(result.data[i]);
     if (result.data[i][0] === userId) {
       isRegistered = true;
       break;

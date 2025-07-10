@@ -86,7 +86,7 @@ async function handleEvent(event) {
     }, {
       headers: headers,
     })
-      .then(() => {})
+      .then((result) => console.log(result))
       .catch((error) => console.error(error));
     //check whether user already register
     if (!checkRegistration(event.source.userId)) {

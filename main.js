@@ -100,7 +100,7 @@ async function handleEvent(event) {
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
-    post_loadingAnimation;
+    //post_loadingAnimation;
     if (checkRegistration(get_database, get_userProfile)) {
       console.log("registered");
     } else {

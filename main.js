@@ -86,7 +86,7 @@ async function handleEvent(event) {
     }, {
       headers: headers,
     })
-      .then((result) => console.log(result))
+      .then((result) => console.log(result.status))
       .catch((error) => console.error(error));
     //check whether user already register
     if (!checkRegistration(event.source.userId)) {
@@ -134,14 +134,17 @@ async function handleEvent(event) {
 
 async function checkRegistration(userId) {
   let isRegistered = false;
-  const database = await axios.get("https://script.google.com/ma,cros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
+  const result = await axios.get(
+    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
-    });
-  for (i = 0; i < database.data.length; i++) {
-    if (database.data[i][0] === userId) {
+    },
+  );
+  console.log(result.data);
+  for (i = 0; i < result.data.length; i++) {
+    if (result.data[i][0] === userId) {
       isRegistered = true;
       console.log("The isRegistered value is true");
       break;

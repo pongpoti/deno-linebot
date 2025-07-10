@@ -67,30 +67,13 @@ app.post("/line", line.middleware(config), (req, res) => {
     });
 });
 
-async function handleEvent(event) {
-  //instantiate database
-  const get_database = await axios.get(
-    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  );
-  //instantiate user profile
-  const get_userProfile = await axios.get(
-    "https://api.line.me/v2/bot/profile/" + event.source.userId,
-    {
-      headers: headers,
-    },
-  );
-
+function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
     loadAnimation(event.source.userId);
-    if (checkRegistration(get_database, get_userProfile)) {
+    if (checkRegistration(getDatabase, getUserProfile(event.source.userId))) {
       console.log("registered");
     } else {
       console.log("not register");
@@ -111,6 +94,28 @@ function loadAnimation(userId) {
   )
     .then((result) => console.log(result.status))
     .catch((error) => console.error(error));
+}
+
+async function getDatabase() {
+  const database = await axios.get(
+    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+  return database;
+}
+
+async function getUserProfile(userId) {
+  const userProfile = await axios.get(
+    "https://api.line.me/v2/bot/profile/" + userId,
+    {
+      headers: headers,
+    },
+  );
+  return userProfile;
 }
 
 function checkRegistration(database, userProfile) {

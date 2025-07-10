@@ -107,7 +107,6 @@ async function handleEvent(event) {
       console.log("not register");
     }
   }
-
 }
 
 function checkRegistration(database, userProfile) {
@@ -155,8 +154,8 @@ function checkRegistration(database, userProfile) {
             },
           },
         },
-      ]
-    })
+      ],
+    });
   }
   return isRegistered;
 }

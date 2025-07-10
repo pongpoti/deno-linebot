@@ -86,49 +86,49 @@ async function handleEvent(event) {
     }, {
       headers: headers,
     })
-      .then((result) => console.log(result.status))
-      .catch((error) => console.error(error));
-    //check whether user already register
-    if (!checkRegistration(event.source.userId)) {
-      return client.pushMessage({
-        "to": event.source.userId,
-        "messages": [
-          {
-            "type": "flex",
-            "altText": "Please register",
-            "contents": {
-              "type": "bubble",
-              "size": "deca",
-              "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                  {
-                    "type": "image",
-                    "url": userProfile.data.pictureUrl,
-                    "size": "xs",
+      .then(() => {
+        if (!checkRegistration(event.source.userId)) {
+          return client.pushMessage({
+            "to": event.source.userId,
+            "messages": [
+              {
+                "type": "flex",
+                "altText": "Please register",
+                "contents": {
+                  "type": "bubble",
+                  "size": "deca",
+                  "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "image",
+                        "url": userProfile.data.pictureUrl,
+                        "size": "xs",
+                      },
+                      {
+                        "type": "text",
+                        "text": "Hi, " + userProfile.data.displayName,
+                        "color": "#FFFFFF",
+                      },
+                      {
+                        "type": "text",
+                        "text": "Click to register",
+                        "color": "#FFFFFF",
+                        "weight": "regular",
+                        "decoration": "underline",
+                      },
+                    ],
+                    "backgroundColor": "#354c73",
+                    "alignItems": "center",
                   },
-                  {
-                    "type": "text",
-                    "text": "Hi, " + userProfile.data.displayName,
-                    "color": "#FFFFFF",
-                  },
-                  {
-                    "type": "text",
-                    "text": "Click to register",
-                    "color": "#FFFFFF",
-                    "weight": "regular",
-                    "decoration": "underline",
-                  },
-                ],
-                "backgroundColor": "#354c73",
-                "alignItems": "center",
+                },
               },
-            },
-          },
-        ],
-      });
-    }
+            ],
+          });
+        }
+      })
+      .catch((error) => console.error(error));
   }
 }
 
@@ -143,16 +143,14 @@ function checkRegistration(userId) {
     },
   )
     .then((result) => {
-      console.log(result.data);
       for (let i = 0; i < result.data.length; i++) {
         if (result.data[i][0] === userId) {
           isRegistered = true;
-          console.log("The isRegistered value is true");
           break;
         }
       }
     })
     .catch((error) => console.error(error));
-
+  console.log("isRegistered value :" + isRegistered);
   return isRegistered;
 }

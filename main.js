@@ -74,7 +74,7 @@ async function handleEvent(event) {
 
     if (checkRegistration(database, userProfile)) {
       if (event.postback.data === "rm_main_status") {
-        postResearchStatus(database, event.source.userId);
+        postResearchStatus(database, userProfile);
       }
     }
   }
@@ -173,11 +173,12 @@ function checkRegistration(database, userProfile) {
   return isRegistered;
 }
 
-function postResearchStatus(database, userId) {
+function postResearchStatus(database, userProfile) {
+  let date = new Date();
   for (let i = 0; i < database.length; i++) {
-    if (database[i][0] === userId) {
+    if (database[i][0] === userProfile.userId) {
       client.pushMessage({
-        "to": userId,
+        "to": userProfile.userId,
         "messages": [
           {
             "type": "flex",
@@ -435,7 +436,14 @@ function postResearchStatus(database, userId) {
                 "contents": [
                   {
                     "type": "text",
-                    "text": "{displayName} + date & time",
+                    "text": "Created by : " + userProfile.displayName,
+                    "align": "end",
+                    "color": "#FFFFFF",
+                    "size": "xxs",
+                  },
+                  {
+                    "type": "text",
+                    "text": date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString() + " || " + date.getHours().toString() + ":" + date.getMinutes().toString(),
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

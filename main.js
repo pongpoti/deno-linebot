@@ -2,7 +2,6 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
-import { userInfo } from "node:os";
 
 const headers = {
   "Content-Type": "application/json",
@@ -129,7 +128,7 @@ function checkRegistration(database, userProfile) {
   }
   if (!isRegistered) {
     client.pushMessage({
-      "to": userProfile.data.userId,
+      "to": userProfile.userId,
       "messages": [
         {
           "type": "flex",
@@ -143,12 +142,12 @@ function checkRegistration(database, userProfile) {
               "contents": [
                 {
                   "type": "image",
-                  "url": userProfile.data.pictureUrl,
+                  "url": userProfile.pictureUrl,
                   "size": "xs",
                 },
                 {
                   "type": "text",
-                  "text": "Hi, " + userProfile.data.displayName,
+                  "text": "Hi, " + userProfile.displayName,
                   "color": "#FFFFFF",
                 },
                 {

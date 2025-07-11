@@ -71,7 +71,9 @@ app.post("/line", line.middleware(config), (req, res) => {
   ) {
     loadAnimation(event.source.userId);
     const database = await getDatabase();
+    const userProfile = await getUserProfile(event.source.userId);
     console.log(database);
+    console.log(userProfile);
   }
 }
 
@@ -99,7 +101,6 @@ async function getDatabase() {
       },
     },
   );
-  console.log(result.data);
   return result.data;
 }
 
@@ -110,7 +111,6 @@ async function getUserProfile(userId) {
       headers: headers,
     },
   );
-  console.log(result.data);
   return result.data;
 }
 

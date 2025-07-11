@@ -276,7 +276,7 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "{คำนำหน้า} + {ชื่อ-สกุล} + {(ชื่อเล่น)}",
+                        "text": database[i][1],
                         "size": "sm"
                       },
                       {

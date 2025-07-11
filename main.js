@@ -430,10 +430,7 @@ function postResearchStatus(database, userProfile) {
                   },
                   {
                     "type": "text",
-                    "text": date.toLocaleString("th-TH", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }),
+                    "text": date.toLocaleString("th-TH", {timeZone: "UTC+7"}),
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

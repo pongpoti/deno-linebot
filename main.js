@@ -276,22 +276,22 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][1],
+                        "text": database[i][3],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "{Name-Surname}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "ที่อยู่ : {ที่อยู่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "เบอร์ติดต่อ : {เบอร์โทร}",
                         "size": "sm"
                       },
                       {
@@ -323,12 +323,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "{ชื่อสถาบัน}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "จบการศึกษาปี + {ปี}",
                         "size": "sm"
                       },
                       {
@@ -360,17 +360,17 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "ปัจจุบัน : {สถานที่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "อบรมต่อยอด : {สถานที่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "",
+                        "text": "หลังจบ : {สถานที่}",
                         "size": "sm"
                       },
                       {

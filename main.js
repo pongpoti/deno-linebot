@@ -276,12 +276,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][3],
+                        "text": database[i][1],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "{Name-Surname}",
+                        "text": database[i][2],
                         "size": "sm"
                       },
                       {

@@ -49,7 +49,7 @@ app.post("/line", line.middleware(config), (req, res) => {
     .then((result) => res.json(result))
     .catch((error) => console.error(error));
 });
-
+//handle event function
 async function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&

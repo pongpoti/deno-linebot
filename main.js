@@ -327,7 +327,7 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][7].toString(),
+                        "text": "ปีจบการศึกษา : " + database[i][7].toString(),
                         "size": "sm",
                       },
                       {
@@ -359,17 +359,17 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "ปัจจุบัน : {สถานที่}",
+                        "text": "ปัจจุบัน : " + database[i][8],
                         "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "อบรมต่อยอด : {สถานที่}",
+                        "text": "อบรมต่อยอด : " + database[i][9],
                         "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "หลังจบ : {สถานที่}",
+                        "text": "หลังจบ : " + database[i][10],
                         "size": "sm",
                       },
                       {

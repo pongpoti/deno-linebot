@@ -63,7 +63,7 @@ app.post("/line", line.middleware(config), (req, res) => {
     .catch((error) => console.error(error));
 });
 
- async function handleEvent(event) {
+async function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
@@ -71,13 +71,13 @@ app.post("/line", line.middleware(config), (req, res) => {
     loadAnimation(event.source.userId);
     const database = await getDatabase();
     const userProfile = await getUserProfile(event.source.userId);
-    //console.log(database);
-    //console.log(userProfile);
-    if(checkRegistration(database, userProfile)) {
-      console.log("registered");
-    } else {
-      console.log("not register");
+
+    if (checkRegistration(database, userProfile)) {
+      if (event.postback.data === "rm_main_status") {
+        postResearchStatus(database, event.source.userId);
+      }
     }
+
   }
 }
 
@@ -98,7 +98,7 @@ function loadAnimation(userId) {
 
 async function getDatabase() {
   const result = await axios.get(
-    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
+    "https://script.google.com/macros/s/AKfycbyKitnoIaN7ETfBVd-sd-J3lV_ntqRleHMDXOkJ1h0FpoqweaMyToqHYBXTu_BnGwbi/exec",
     {
       headers: {
         "Content-Type": "application/json",
@@ -167,4 +167,284 @@ function checkRegistration(database, userProfile) {
     });
   }
   return isRegistered;
+}
+
+function postResearchStatus(database, userId) {
+  for (let i = 0; i < database.length; i++) {
+    if (database[i][0] === userId) {
+      client.pushMessage({
+        "to": userId,
+        "messages": [
+          {
+            "type": "flex",
+            "altText": "Research status",
+            "contents": {
+              "type": "bubble",
+              "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "ระบบข้อมูลการฝึกอบรม",
+                        "color": "#ffffff",
+                        "align": "center",
+                        "size": "lg",
+                        "weight": "bold"
+                      },
+                      {
+                        "type": "text",
+                        "text": "แพทย์ต่อยอด อนุสาขาอุบัติเหตุ",
+                        "color": "#ffffff",
+                        "align": "center",
+                        "size": "md"
+                      }
+                    ]
+                  }
+                ],
+                "backgroundColor": "#354c73"
+              },
+              "hero": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "Personal data",
+                    "color": "#FFFFFF",
+                    "align": "center"
+                  }
+                ],
+                "paddingAll": "md",
+                "backgroundColor": "#5A79BB"
+              },
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "ปีการศึกษา 2568",
+                        "size": "md",
+                        "align": "center"
+                      },
+                      {
+                        "type": "text",
+                        "text": "1 กรกฎาคม 2568 - 30 มิถุนายน 2569",
+                        "size": "sm",
+                        "align": "center"
+                      },
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      },
+                      {
+                        "type": "text",
+                        "text": "ข้อมูลพื้นฐาน",
+                        "weight": "bold",
+                        "size": "md"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][1] + " (" + database[i][2] + ")",
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][3],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][4],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][5].slice(1, -1),
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      },
+                      {
+                        "type": "text",
+                        "text": "แพทย์ประจำบ้าน",
+                        "size": "md",
+                        "weight": "bold"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][6],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][7],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      },
+                      {
+                        "type": "text",
+                        "text": "การทำงาน",
+                        "size": "md",
+                        "weight": "bold"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][8],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][9],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": database[i][10],
+                        "size": "sm"
+                      },
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "size": "xxs",
+                        "color": "#FFFFFF"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "ข้อกำหนดในการสำเร็จการศึกษา",
+                            "size": "sm",
+                            "align": "center",
+                            "color": "#FFFFFF"
+                          }
+                        ],
+                        "backgroundColor": "#5A79BB",
+                        "justifyContent": "center",
+                        "cornerRadius": "md",
+                        "action": {
+                          "type": "uri",
+                          "label": "action",
+                          "uri": "http://linecorp.com/"
+                        },
+                        "width": "220px",
+                        "height": "35px",
+                        "borderColor": "#354c73",
+                        "borderWidth": "normal"
+                      },
+                      {
+                        "type": "text",
+                        "text": "...",
+                        "color": "#FFFFFF",
+                        "size": "xxs"
+                      }
+                    ],
+                    "alignItems": "center"
+                  }
+                ]
+              },
+              "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "{displayName} + date & time",
+                    "align": "end",
+                    "color": "#FFFFFF",
+                    "size": "xxs"
+                  }
+                ],
+                "backgroundColor": "#354c73"
+              }
+            }
+          }
+        ]
+      })
+      break;
+    }
+  }
+
 }

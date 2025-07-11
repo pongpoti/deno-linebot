@@ -286,12 +286,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][4],
+                        "text": "",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][5],
+                        "text": "",
                         "size": "sm"
                       },
                       {
@@ -323,12 +323,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][6],
+                        "text": "",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][7],
+                        "text": "",
                         "size": "sm"
                       },
                       {
@@ -360,17 +360,17 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][8],
+                        "text": "",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][9],
+                        "text": "",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][10],
+                        "text": "",
                         "size": "sm"
                       },
                       {

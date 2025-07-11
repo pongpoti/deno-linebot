@@ -2,17 +2,17 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
-
+//initialize headers
 const headers = {
   "Content-Type": "application/json",
   "Authorization":
     "Bearer qmdRNYKVnChOLXdfdhFn159TMJtURVZ1wpx2cp9EKLCTv2NWq14J+OFjtOWObAKVPmY8+q16zF14O55JXI83c9lBEtFgV31unhTx4lDpQPptfzK+G8ANFSkHA08qx82xnL8gmEyPKiRoZVhjVrBcOQdB04t89/1O/w1cDnyilFU=",
 };
-
+//initialize config
 const config = {
   channelSecret: Deno.env.get("CHANNEL_SECRET"),
 };
-
+//initialize client
 const client = new line.messagingApi.MessagingApiClient({
   channelAccessToken: Deno.env.get("CHANNEL_ACCESS_TOKEN"),
 });

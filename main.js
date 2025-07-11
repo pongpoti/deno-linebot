@@ -327,7 +327,7 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][7],
+                        "text": database[i][7].toString(),
                         "size": "sm",
                       },
                       {

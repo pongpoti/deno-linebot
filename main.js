@@ -327,7 +327,7 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "จบการศึกษาปี + {ปี}",
+                        "text": database[i][7],
                         "size": "sm",
                       },
                       {

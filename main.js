@@ -64,19 +64,15 @@ app.post("/line", line.middleware(config), (req, res) => {
     .catch((error) => console.error(error));
 });
 
-function handleEvent(event) {
+async function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
     loadAnimation(event.source.userId);
-    const database = getDatabase();
-    const userProfile = getUserProfile(event.source.userId);
-    if (checkRegistration(database, userProfile)) {
-      console.log("registered");
-    } else {
-      console.log("not register");
-    }
+    console.log(getDatabase());
+    console.log(getUserProfile(event.source.userId));
+    console.log(checkRegistration(getDatabase(), getUserProfile(event.source.userId)));
   }
 }
 
@@ -96,8 +92,7 @@ function loadAnimation(userId) {
 }
 
 async function getDatabase() {
-  console.log("within getDatabase()");
-  const database = await axios.get(
+  const result = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
@@ -105,26 +100,25 @@ async function getDatabase() {
       },
     },
   );
-  console.log(database.data);
-  return database;
+  console.log(result.data);
+  return result.data;
 }
 
 async function getUserProfile(userId) {
-  console.log("within getUserProfile()");
-  const userProfile = await axios.get(
+  const result = await axios.get(
     "https://api.line.me/v2/bot/profile/" + userId,
     {
       headers: headers,
     },
   );
-  console.log(userProfile.data);
-  return userProfile;
+  console.log(result.data);
+  return result.data;
 }
 
 function checkRegistration(database, userProfile) {
   let isRegistered = false;
-  for (let i = 0; i < database.data.length; i++) {
-    if (database.data[i][0] === userProfile.data.userId) {
+  for (let i = 0; i < database.length; i++) {
+    if (database[i][0] === userProfile.userId) {
       isRegistered = true;
       break;
     }

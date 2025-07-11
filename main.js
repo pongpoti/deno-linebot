@@ -64,17 +64,14 @@ app.post("/line", line.middleware(config), (req, res) => {
     .catch((error) => console.error(error));
 });
 
-function handleEvent(event) {
+ async function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
     loadAnimation(event.source.userId);
-    console.log(getDatabase());
-    console.log(getUserProfile(event.source.userId));
-    console.log(
-      checkRegistration(getDatabase(), getUserProfile(event.source.userId)),
-    );
+    const database = await getDatabase();
+    console.log(database);
   }
 }
 
@@ -93,19 +90,17 @@ function loadAnimation(userId) {
     .catch((error) => console.error(error));
 }
 
-function getDatabase() {
-  axios.get(
+async function getDatabase() {
+  const result = await axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
     },
-  )
-    .then((result) => {
-      return result.data;
-    })
-    .catch((error) => console.error(error));
+  );
+  console.log(result.data);
+  return result.data;
 }
 
 async function getUserProfile(userId) {

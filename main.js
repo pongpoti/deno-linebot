@@ -443,7 +443,11 @@ function postResearchStatus(database, userProfile) {
                   },
                   {
                     "type": "text",
-                    "text": date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString() + " || " + date.getHours().toString() + ":" + date.getMinutes().toString(),
+                    "text": date.getDate().toString() + "-" +
+                      (date.getMonth() + 1).toString() + "-" +
+                      date.getFullYear().toString() + " || " +
+                      date.getHours().toString() + ":" +
+                      date.getMinutes().toString(),
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

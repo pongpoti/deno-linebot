@@ -174,7 +174,6 @@ function checkRegistration(database, userProfile) {
 }
 
 function postResearchStatus(database, userProfile) {
-  let date = new Date();
   for (let i = 0; i < database.length; i++) {
     if (database[i][0] === userProfile.userId) {
       client.pushMessage({

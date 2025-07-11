@@ -26,20 +26,7 @@ app.listen(port, () => {
 
 //register tally form
 app.use("/register", express.static("register"));
-
-app.get("/test", (_, res) => {
-  axios.get(
-    "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  )
-    .then((result) => res.send(result.data))
-    .catch((error) => console.error(error));
-});
-
+//test by userId
 app.get("/tally", () => {
   axios.post("https://api.line.me/v2/bot/message/push", {
     "to": "U60a46a396e1df9b83a7167c51180e252",
@@ -55,7 +42,7 @@ app.get("/tally", () => {
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 });
-
+//main
 app.post("/line", line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
@@ -73,7 +60,7 @@ async function handleEvent(event) {
     const userProfile = await getUserProfile(event.source.userId);
 
     if (checkRegistration(database, userProfile)) {
-      if (event.postback.data === "rm_main_status") {
+      if (event.postback.data === "rm_main_info") {
         postResearchStatus(database, userProfile);
       }
     }
@@ -445,8 +432,8 @@ function postResearchStatus(database, userProfile) {
                     "text": date.getDate().toString() + "-" +
                       (date.getMonth() + 1).toString() + "-" +
                       date.getFullYear().toString() + " || " +
-                      date.getHours().toString() + ":" +
-                      date.getMinutes().toString(),
+                      date.getUTCHours().toString() + ":" +
+                      date.getUTCMinutes().toString(),
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

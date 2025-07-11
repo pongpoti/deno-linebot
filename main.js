@@ -399,7 +399,7 @@ function postResearchStatus(database, userProfile) {
                         "action": {
                           "type": "uri",
                           "label": "action",
-                          "uri": "http://linecorp.com/",
+                          "uri": "https://thaiorthotrauma.com",
                         },
                         "width": "220px",
                         "height": "35px",
@@ -430,11 +430,10 @@ function postResearchStatus(database, userProfile) {
                   },
                   {
                     "type": "text",
-                    "text": date.getDate().toString() + "-" +
-                      (date.getMonth() + 1).toString() + "-" +
-                      date.getFullYear().toString() + " || " +
-                      date.getUTCHours().toString() + ":" +
-                      date.getUTCMinutes().toString(),
+                    "text": date.toLocaleString("th-TH", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }),
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

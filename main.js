@@ -72,7 +72,9 @@ function handleEvent(event) {
     loadAnimation(event.source.userId);
     console.log(getDatabase());
     console.log(getUserProfile(event.source.userId));
-    console.log(checkRegistration(getDatabase(), getUserProfile(event.source.userId)));
+    console.log(
+      checkRegistration(getDatabase(), getUserProfile(event.source.userId)),
+    );
   }
 }
 
@@ -91,17 +93,19 @@ function loadAnimation(userId) {
     .catch((error) => console.error(error));
 }
 
-async function getDatabase() {
-  const result = await axios.get(
+function getDatabase() {
+  axios.get(
     "https://script.google.com/macros/s/AKfycbz8bl2Tk1Wq9EPjbSQIjB-tZ_4cFDmZ_lOSlUZrPZZaw5vZbvk8XESKoj5B4BA4Zdnb/exec",
     {
       headers: {
         "Content-Type": "application/json",
       },
     },
-  );
-  console.log(result.data);
-  return result.data;
+  )
+    .then((result) => {
+      return result.data;
+    })
+    .catch((error) => console.error(error));
 }
 
 async function getUserProfile(userId) {

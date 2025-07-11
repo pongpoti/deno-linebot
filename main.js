@@ -163,6 +163,7 @@ function checkRegistration(database, userProfile) {
 function postResearchStatus(database, userProfile) {
   for (let i = 0; i < database.length; i++) {
     if (database[i][0] === userProfile.userId) {
+      const date = new Date();
       client.pushMessage({
         "to": userProfile.userId,
         "messages": [

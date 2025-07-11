@@ -77,7 +77,6 @@ async function handleEvent(event) {
         postResearchStatus(database, event.source.userId);
       }
     }
-
   }
 }
 
@@ -159,8 +158,8 @@ function checkRegistration(database, userProfile) {
                   "action": {
                     "type": "uri",
                     "label": "action",
-                    "uri": "https://liff.line.me/2007511559-yMnLXN2D"
-                  }
+                    "uri": "https://liff.line.me/2007511559-yMnLXN2D",
+                  },
                 },
               ],
               "backgroundColor": "#354c73",
@@ -199,19 +198,19 @@ function postResearchStatus(database, userId) {
                         "color": "#ffffff",
                         "align": "center",
                         "size": "lg",
-                        "weight": "bold"
+                        "weight": "bold",
                       },
                       {
                         "type": "text",
                         "text": "แพทย์ต่อยอด อนุสาขาอุบัติเหตุ",
                         "color": "#ffffff",
                         "align": "center",
-                        "size": "md"
-                      }
-                    ]
-                  }
+                        "size": "md",
+                      },
+                    ],
+                  },
                 ],
-                "backgroundColor": "#354c73"
+                "backgroundColor": "#354c73",
               },
               "hero": {
                 "type": "box",
@@ -221,11 +220,11 @@ function postResearchStatus(database, userId) {
                     "type": "text",
                     "text": "Personal data",
                     "color": "#FFFFFF",
-                    "align": "center"
-                  }
+                    "align": "center",
+                  },
                 ],
                 "paddingAll": "md",
-                "backgroundColor": "#5A79BB"
+                "backgroundColor": "#5A79BB",
               },
               "body": {
                 "type": "box",
@@ -239,24 +238,24 @@ function postResearchStatus(database, userId) {
                         "type": "text",
                         "text": "ปีการศึกษา 2568",
                         "size": "md",
-                        "align": "center"
+                        "align": "center",
                       },
                       {
                         "type": "text",
                         "text": "1 กรกฎาคม 2568 - 30 มิถุนายน 2569",
                         "size": "sm",
-                        "align": "center"
+                        "align": "center",
                       },
                       {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
-                      }
-                    ]
+                        "color": "#FFFFFF",
+                      },
+                    ],
                   },
                   {
-                    "type": "separator"
+                    "type": "separator",
                   },
                   {
                     "type": "box",
@@ -266,44 +265,44 @@ function postResearchStatus(database, userId) {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
                       },
                       {
                         "type": "text",
                         "text": "ข้อมูลพื้นฐาน",
                         "weight": "bold",
-                        "size": "md"
+                        "size": "md",
                       },
                       {
                         "type": "text",
                         "text": database[i][1],
-                        "size": "sm"
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": database[i][2],
-                        "size": "sm"
+                        "text": database[i][3],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "ที่อยู่ : {ที่อยู่}",
-                        "size": "sm"
+                        "text": database[i][4],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "เบอร์ติดต่อ : {เบอร์โทร}",
-                        "size": "sm"
+                        "text": database[i][5].slice(1, -1),
+                        "size": "sm",
                       },
                       {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
-                      }
-                    ]
+                        "color": "#FFFFFF",
+                      },
+                    ],
                   },
                   {
-                    "type": "separator"
+                    "type": "separator",
                   },
                   {
                     "type": "box",
@@ -313,34 +312,34 @@ function postResearchStatus(database, userId) {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
                       },
                       {
                         "type": "text",
                         "text": "แพทย์ประจำบ้าน",
                         "size": "md",
-                        "weight": "bold"
+                        "weight": "bold",
                       },
                       {
                         "type": "text",
-                        "text": "{ชื่อสถาบัน}",
-                        "size": "sm"
+                        "text": database[i][6],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "จบการศึกษาปี + {ปี}",
-                        "size": "sm"
+                        "text": database[i][7],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
-                      }
-                    ]
+                        "color": "#FFFFFF",
+                      },
+                    ],
                   },
                   {
-                    "type": "separator"
+                    "type": "separator",
                   },
                   {
                     "type": "box",
@@ -350,39 +349,39 @@ function postResearchStatus(database, userId) {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
                       },
                       {
                         "type": "text",
                         "text": "การทำงาน",
                         "size": "md",
-                        "weight": "bold"
+                        "weight": "bold",
                       },
                       {
                         "type": "text",
-                        "text": "ปัจจุบัน : {สถานที่}",
-                        "size": "sm"
+                        "text": database[i][8],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "อบรมต่อยอด : {สถานที่}",
-                        "size": "sm"
+                        "text": database[i][9],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
-                        "text": "หลังจบ : {สถานที่}",
-                        "size": "sm"
+                        "text": database[i][10],
+                        "size": "sm",
                       },
                       {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
-                      }
-                    ]
+                        "color": "#FFFFFF",
+                      },
+                    ],
                   },
                   {
-                    "type": "separator"
+                    "type": "separator",
                   },
                   {
                     "type": "box",
@@ -392,7 +391,7 @@ function postResearchStatus(database, userId) {
                         "type": "text",
                         "text": "...",
                         "size": "xxs",
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
                       },
                       {
                         "type": "box",
@@ -403,8 +402,8 @@ function postResearchStatus(database, userId) {
                             "text": "ข้อกำหนดในการสำเร็จการศึกษา",
                             "size": "sm",
                             "align": "center",
-                            "color": "#FFFFFF"
-                          }
+                            "color": "#FFFFFF",
+                          },
                         ],
                         "backgroundColor": "#5A79BB",
                         "justifyContent": "center",
@@ -412,23 +411,23 @@ function postResearchStatus(database, userId) {
                         "action": {
                           "type": "uri",
                           "label": "action",
-                          "uri": "http://linecorp.com/"
+                          "uri": "http://linecorp.com/",
                         },
                         "width": "220px",
                         "height": "35px",
                         "borderColor": "#354c73",
-                        "borderWidth": "normal"
+                        "borderWidth": "normal",
                       },
                       {
                         "type": "text",
                         "text": "...",
                         "color": "#FFFFFF",
-                        "size": "xxs"
-                      }
+                        "size": "xxs",
+                      },
                     ],
-                    "alignItems": "center"
-                  }
-                ]
+                    "alignItems": "center",
+                  },
+                ],
               },
               "footer": {
                 "type": "box",
@@ -439,19 +438,16 @@ function postResearchStatus(database, userId) {
                     "text": "{displayName} + date & time",
                     "align": "end",
                     "color": "#FFFFFF",
-                    "size": "xxs"
-                  }
+                    "size": "xxs",
+                  },
                 ],
-                "backgroundColor": "#354c73"
-              }
-            }
-
-
-          }
-        ]
-      })
+                "backgroundColor": "#354c73",
+              },
+            },
+          },
+        ],
+      });
       break;
     }
   }
-
 }

@@ -74,7 +74,11 @@ app.post("/line", line.middleware(config), (req, res) => {
     const userProfile = await getUserProfile(event.source.userId);
     //console.log(database);
     //console.log(userProfile);
-    console.log(checkRegistration(database, userProfile));
+    if(checkRegistration(database, userProfile)) {
+      console.log("registered");
+    } else {
+      console.log("not register");
+    }
   }
 }
 

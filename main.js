@@ -71,9 +71,7 @@ function handleEvent(event) {
   ) {
     loadAnimation(event.source.userId);
     const database = getDatabase();
-    console.log(database.data);
     const userProfile = getUserProfile(event.source.userId);
-    console.log(userProfile.data);
     if (checkRegistration(database, userProfile)) {
       console.log("registered");
     } else {
@@ -107,6 +105,7 @@ async function getDatabase() {
       },
     },
   );
+  console.log(database.data);
   return database;
 }
 
@@ -118,6 +117,7 @@ async function getUserProfile(userId) {
       headers: headers,
     },
   );
+  console.log(userProfile.data);
   return userProfile;
 }
 

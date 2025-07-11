@@ -286,12 +286,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][4],
+                        "text": "ที่อยู่ : " + database[i][4],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][5],
+                        "text": "เบอร์ติดต่อ : " + database[i][5],
                         "size": "sm"
                       },
                       {

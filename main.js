@@ -291,7 +291,7 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "เบอร์ติดต่อ : {เบอร์โทร}",
+                        "text": database[i][5],
                         "size": "sm"
                       },
                       {

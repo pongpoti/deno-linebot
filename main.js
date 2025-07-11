@@ -64,7 +64,7 @@ app.post("/line", line.middleware(config), (req, res) => {
     .catch((error) => console.error(error));
 });
 
-async function handleEvent(event) {
+function handleEvent(event) {
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"

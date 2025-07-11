@@ -156,6 +156,11 @@ function checkRegistration(database, userProfile) {
                   "color": "#FFFFFF",
                   "weight": "regular",
                   "decoration": "underline",
+                  "action": {
+                    "type": uri,
+                    "label": action,
+                    "uri": "https://liff.line.me/2007511559-yMnLXN2D"
+                  }
                 },
               ],
               "backgroundColor": "#354c73",
@@ -271,22 +276,22 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][1] + " (" + database[i][2] + ")",
+                        "text": "{คำนำหน้า} + {ชื่อ-สกุล} + {(ชื่อเล่น)}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][3],
+                        "text": "{Name-Surname}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][4],
+                        "text": "ที่อยู่ : {ที่อยู่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][5].slice(1, -1),
+                        "text": "เบอร์ติดต่อ : {เบอร์โทร}",
                         "size": "sm"
                       },
                       {
@@ -318,12 +323,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][6],
+                        "text": "{ชื่อสถาบัน}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][7],
+                        "text": "จบการศึกษาปี + {ปี}",
                         "size": "sm"
                       },
                       {
@@ -355,17 +360,17 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][8],
+                        "text": "ปัจจุบัน : {สถานที่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][9],
+                        "text": "อบรมต่อยอด : {สถานที่}",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": database[i][10],
+                        "text": "หลังจบ : {สถานที่}",
                         "size": "sm"
                       },
                       {
@@ -440,6 +445,8 @@ function postResearchStatus(database, userId) {
                 "backgroundColor": "#354c73"
               }
             }
+
+
           }
         ]
       })

@@ -276,22 +276,22 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": database[i][1],
+                        "text": database[i][1] + " (" + database[i][2] + ")",
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "{Name-Surname}",
+                        "text": database[i][3],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "ที่อยู่ : {ที่อยู่}",
+                        "text": database[i][4],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "เบอร์ติดต่อ : {เบอร์โทร}",
+                        "text": database[i][5],
                         "size": "sm"
                       },
                       {
@@ -323,12 +323,12 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "{ชื่อสถาบัน}",
+                        "text": database[i][6],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "จบการศึกษาปี + {ปี}",
+                        "text": database[i][7],
                         "size": "sm"
                       },
                       {
@@ -360,17 +360,17 @@ function postResearchStatus(database, userId) {
                       },
                       {
                         "type": "text",
-                        "text": "ปัจจุบัน : {สถานที่}",
+                        "text": database[i][8],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "อบรมต่อยอด : {สถานที่}",
+                        "text": database[i][9],
                         "size": "sm"
                       },
                       {
                         "type": "text",
-                        "text": "หลังจบ : {สถานที่}",
+                        "text": database[i][10],
                         "size": "sm"
                       },
                       {

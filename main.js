@@ -157,8 +157,8 @@ function checkRegistration(database, userProfile) {
                   "weight": "regular",
                   "decoration": "underline",
                   "action": {
-                    "type": uri,
-                    "label": action,
+                    "type": "uri",
+                    "label": "action",
                     "uri": "https://liff.line.me/2007511559-yMnLXN2D"
                   }
                 },

@@ -72,8 +72,9 @@ app.post("/line", line.middleware(config), (req, res) => {
     loadAnimation(event.source.userId);
     const database = await getDatabase();
     const userProfile = await getUserProfile(event.source.userId);
-    console.log(database);
-    console.log(userProfile);
+    //console.log(database);
+    //console.log(userProfile);
+    console.log(checkRegistration(database, userProfile));
   }
 }
 
@@ -82,7 +83,7 @@ function loadAnimation(userId) {
     "https://api.line.me/v2/bot/chat/loading/start",
     {
       "chatId": userId,
-      "loadingSeconds": 10,
+      "loadingSeconds": 5,
     },
     {
       headers: headers,

@@ -285,6 +285,10 @@ function postResearchStatus(database, userProfile) {
                         "type": "text",
                         "text": "เบอร์ติดต่อ : " + database[i][5].slice(1, -1),
                         "size": "sm",
+                        "action": {
+                          "type": "message",
+                          "text": database[i][5].slice(1, -1)
+                        }
                       },
                       {
                         "type": "text",

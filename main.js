@@ -16,14 +16,12 @@ const config = {
 const client = new line.messagingApi.MessagingApiClient({
   channelAccessToken: Deno.env.get("CHANNEL_ACCESS_TOKEN"),
 });
-
+//initialize express app
 const app = express();
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
-
 //register tally form
 app.use("/register", express.static("register"));
 //test by userId
@@ -51,14 +49,15 @@ app.post("/line", line.middleware(config), (req, res) => {
 });
 //handle event function
 async function handleEvent(event) {
+  //disable loading animation in rm_main_quests and rm_quest_back buttons
   if (
     event.postback.data !== "rm_main_quests" &&
     event.postback.data !== "rm_quest_back"
   ) {
     loadAnimation(event.source.userId);
+    //retrieve database and user profile data
     const database = await getDatabase();
     const userProfile = await getUserProfile(event.source.userId);
-
     if (checkRegistration(database, userProfile)) {
       if (event.postback.data === "rm_main_info") {
         postResearchStatus(database, userProfile);
@@ -423,7 +422,7 @@ function postResearchStatus(database, userProfile) {
                 "contents": [
                   {
                     "type": "text",
-                    "text": "Created by : " + userProfile.displayName,
+                    "text": "Created by " + userProfile.displayName,
                     "align": "end",
                     "color": "#FFFFFF",
                     "size": "xxs",

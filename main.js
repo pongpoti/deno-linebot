@@ -86,7 +86,7 @@ function loadAnimation(userId) {
 
 async function getDatabase() {
   const result = await axios.get(
-    "https://script.google.com/macros/s/AKfycbyKitnoIaN7ETfBVd-sd-J3lV_ntqRleHMDXOkJ1h0FpoqweaMyToqHYBXTu_BnGwbi/exec",
+    "https://script.google.com/macros/s/AKfycby9xaQvfe-MSw062WOvzvaJn-MVbKCz_SIkVAEiUt5_C9mt0gTmHCICko7EF3cGX5xJ/exec",
     {
       headers: {
         "Content-Type": "application/json",

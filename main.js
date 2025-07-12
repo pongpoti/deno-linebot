@@ -2,6 +2,7 @@ import * as line from "@line/bot-sdk";
 import express from "express";
 import process from "node:process";
 import axios from "axios";
+//self userId = U60a46a396e1df9b83a7167c51180e252
 //initialize headers
 const headers = {
   "Content-Type": "application/json",
@@ -58,7 +59,9 @@ async function handleEvent(event) {
     //retrieve database and user profile data
     const database = await getDatabase();
     const userProfile = await getUserProfile(event.source.userId);
+    //check if user already register
     if (checkRegistration(database, userProfile)) {
+      //postback data = rm_main_info
       if (event.postback.data === "rm_main_info") {
         postResearchStatus(database, userProfile);
       }
@@ -77,7 +80,7 @@ function loadAnimation(userId) {
       headers: headers,
     },
   )
-    .then((result) => console.log(result.status))
+    .then(() => console.log("loadAnimation(), userId : " + userId))
     .catch((error) => console.error(error));
 }
 
@@ -90,6 +93,7 @@ async function getDatabase() {
       },
     },
   );
+  console.log("getDatabase()");
   return result.data;
 }
 
@@ -100,6 +104,7 @@ async function getUserProfile(userId) {
       headers: headers,
     },
   );
+  console.log("getUserProfile(), userId : " + userId);
   return result.data;
 }
 
@@ -156,6 +161,7 @@ function checkRegistration(database, userProfile) {
       ],
     });
   }
+  console.log("checkRegistration(), userId : " + userProfile.userId);
   return isRegistered;
 }
 
@@ -448,4 +454,5 @@ function postResearchStatus(database, userProfile) {
       break;
     }
   }
+  console.log("postResearchStatus(), userId : " + userProfile.userId);
 }

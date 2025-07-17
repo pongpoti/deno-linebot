@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOTS Fellow registration</title>
+    <script async src="https://tally.so/widgets/embed.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style type="text/css">
+        html {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        p {
+            text-align: center;
+            display: none;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border: 0;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="pre1">กรุณาเปิดใน mobile browser</p>
+    <p id="pre2">กรุณาเปิดใน LINE application</p>
+    <iframe id="tally" data-tally-src="" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0"
+        title="ลงรายละเอียดงานวิจัย.."></iframe>
+
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+        const pre1 = document.getElementById("pre1");
+        const pre2 = document.getElementById("pre2");
+        const tally = document.getElementById("tally");
+        let idToken = "";
+        const logInLIFF = async () => {
+            await liff.init({ liffId: "2007511559-d2bXen8m" });
+            if (liff.isLoggedIn()) {
+                idToken = await liff.getIDToken();
+                tally.style.display = "block";
+                tally.setAttribute("data-tally-src", "https://tally.so/r/n90A71?transparentBackground=1&token=" + idToken);
+            } else {
+                liff.login();
+            }
+        }
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            pre1.style.display = "block";
+        } else {
+            if (!liff.isInClient()) {
+                pre2.style.display = "block";
+            } else {
+                logInLIFF();
+            }
+        }
+    </script>
+
+</body>
+
+</html>

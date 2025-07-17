@@ -23,8 +23,10 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
-//register tally form
-app.use("/register", express.static("register"));
+//register personal info to Tally form
+app.use("/register-info", express.static("register-info"));
+//register research data to Tally form
+app.use("register-research", express.static("register-research"));
 //test by userId
 app.get("/tally", () => {
   axios.post("https://api.line.me/v2/bot/message/push", {
@@ -74,7 +76,7 @@ function loadAnimation(userId) {
     "https://api.line.me/v2/bot/chat/loading/start",
     {
       "chatId": userId,
-      "loadingSeconds": 5,
+      "loadingSeconds": 3,
     },
     {
       headers: headers,

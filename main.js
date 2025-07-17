@@ -166,7 +166,7 @@ function checkPersonalInfoRegistration(database, userProfile) {
       ],
     });
   }
-  console.log("checkRegistration(), userId : " + userProfile.userId);
+  console.log("checkPersonalInfoRegistration(), userId : " + userProfile.userId);
   return isRegistered;
 }
 
@@ -180,6 +180,7 @@ function checkResearchStatusRegistration(database, userId) {
       }
     }
   }
+  /*
   if (isBlank) {
     client.pushMessage({
       "to": userId,
@@ -220,6 +221,7 @@ function checkResearchStatusRegistration(database, userId) {
       ],
     });
   }
+    */
   console.log("checkResearchStatusRegistration(), userId : " + userId);
   console.log("isBlank : " + isBlank);
   return isBlank;

@@ -26,7 +26,7 @@ app.listen(port, () => {
 //register personal info to Tally form
 app.use("/register-info", express.static("register-info"));
 //register research data to Tally form
-app.use("register-research", express.static("register-research"));
+app.use("/register-research", express.static("register-research"));
 //test by userId
 app.get("/tally", () => {
   axios.post("https://api.line.me/v2/bot/message/push", {

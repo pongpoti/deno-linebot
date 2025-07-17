@@ -221,7 +221,7 @@ function checkResearchStatusRegistration(database, userId) {
     });
   }
   console.log("checkResearchStatusRegistration(), userId : " + userId);
-  console.log("isBlank = " + isBlank===true;)
+  console.log("isBlank = " + isBlank);
   return isBlank;
 }
 

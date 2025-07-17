@@ -64,7 +64,7 @@ async function handleEvent(event) {
     //check if user already register
     if (checkPersonalInfoRegistration(database, userProfile)) {
       if (event.postback.data === "rm_main_status") {
-        if (!checkResearchStatusRegistration(database)) {
+        if (!checkResearchStatusRegistration(database, event.source.userId)) {
           console.log("register both info and research");
         }
       } else if (event.postback.data === "rm_main_info") {

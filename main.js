@@ -62,9 +62,12 @@ async function handleEvent(event) {
     const database = await getDatabase();
     const userProfile = await getUserProfile(event.source.userId);
     //check if user already register
-    if (checkRegistration(database, userProfile)) {
-      //postback data = rm_main_info
-      if (event.postback.data === "rm_main_info") {
+    if (checkPersonalInfoRegistration(database, userProfile)) {
+      if (event.postback.data === "rm_main_status") {
+        if (!checkResearchStatusRegistration(database)) {
+          console.log("register both info and research");
+        }
+      } else if (event.postback.data === "rm_main_info") {
         postResearchStatus(database, userProfile);
       }
     }
@@ -110,7 +113,7 @@ async function getUserProfile(userId) {
   return result.data;
 }
 
-function checkRegistration(database, userProfile) {
+function checkPersonalInfoRegistration(database, userProfile) {
   let isRegistered = false;
   for (let i = 0; i < database.length; i++) {
     if (database[i][0] === userProfile.userId) {
@@ -165,6 +168,61 @@ function checkRegistration(database, userProfile) {
   }
   console.log("checkRegistration(), userId : " + userProfile.userId);
   return isRegistered;
+}
+
+function checkResearchStatusRegistration(database, userId) {
+  let isBlank = false;
+  for (let i = 0; i < database.length; i++) {
+    if (database[i][0] === userId) {
+      if (database[i][11] === "") {
+        isBlank = true;
+        break;
+      }
+    }
+  }
+  if (isBlank) {
+    client.pushMessage({
+      "to": userId,
+      "messages": [
+        {
+          "type": "flex",
+          "altText": "Provide research info",
+          "contents": {
+            "type": "bubble",
+            "size": "kilo",
+            "header": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "There is no info about your research",
+                  "color": "#FFFFFF",
+                  "size": "sm",
+                },
+                {
+                  "type": "text",
+                  "text": "Give us some data",
+                  "color": "#FFFFFF",
+                  "weight": "regular",
+                  "decoration": "underline",
+                  "action": {
+                    "type": "uri",
+                    "uri": "https://liff.line.me/2007511559-d2bXen8m",
+                  },
+                },
+              ],
+              "backgroundColor": "#354c73",
+              "alignItems": "center",
+            },
+          },
+        },
+      ],
+    });
+  }
+  console.log("checkResearchStatusRegistration(), userId : " + userId);
+  console.log("isBlank : " + isBlank);
+  return isBlank;
 }
 
 function postResearchStatus(database, userProfile) {
@@ -286,7 +344,7 @@ function postResearchStatus(database, userProfile) {
                       {
                         "type": "text",
                         "text": "เบอร์ติดต่อ : " + database[i][5].slice(1, -1),
-                        "size": "sm"
+                        "size": "sm",
                       },
                       {
                         "type": "text",
@@ -440,7 +498,7 @@ function postResearchStatus(database, userProfile) {
                     "text": date.toLocaleString("en-TH", {
                       timeZone: "Asia/Bangkok",
                       dateStyle: "medium",
-                      timeStyle: "short"
+                      timeStyle: "short",
                     }),
                     "align": "end",
                     "color": "#FFFFFF",
